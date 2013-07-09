@@ -1,0 +1,198 @@
+<?php
+require_once('config.php');
+error_reporting(E_ALL);
+function get_user_ip() {
+    if(isset($_SERVER['HTTP_CLIENT_IP']) && $_SERVER['HTTP_CLIENT_IP'] !='unknown')
+    { $ip = $_SERVER['HTTP_CLIENT_IP'];}
+    elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR']!='unknown')
+    {$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];}
+    else{
+        $ip = $_SERVER['REMOTE_ADDR']; 
+    }
+    return $ip;
+}
+date_default_timezone_set('PRC');
+
+function html_header($title="计科一班")
+{
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title><?php echo $title ?></title>
+    <meta name="description" content="中山大学2011级计科一班">
+<script type="text/javascript" src="../../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.js?version=2.3.1"></script>
+<script type="text/javascript" src="../../js/ajax.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" media="screen" />   
+
+</head>
+
+<?php    
+}
+
+
+function safePost($str)
+{
+    $val = !empty($_POST["$str"]) ? $_POST["$str"]:null;
+   // $val = strip_tags($val);
+    // 这个好像太严格了
+    // $val =htmlentities($val);
+    $val = htmlentities($val,ENT_QUOTES,"UTF-8");
+    if(!get_magic_quotes_gpc())
+    {
+        $val = addslashes($val);
+    }
+    return $val;
+}
+
+function safeGet($str)
+{
+    $val = !empty($_GET["$str"]) ? $_GET["$str"]:null;
+    if(!get_magic_quotes_gpc())
+    {
+        $val = addslashes($val);
+    }
+    return $val;
+}
+
+function coinChange($user,$num,$type)
+{
+    $dbc =newDbc();
+    $query ="update user set coin =coin+$num where name ='".$user."'";
+    mysqli_query($dbc,$query) or die("failed");
+    $timestamp = microtime(true);
+    if($num >0)
+        $query ="insert into coin values('".$user."','".$type."','".$timestamp."','+".$num."') ";
+    else
+        $query ="insert into coin values('".$user."','".$type."','".$timestamp."','".$num."') ";
+
+    mysqli_query($dbc,$query) or die ("failed insert");
+    $dbc->close();
+
+}
+
+function addMessage($user,$content,$from="system")
+{
+    $dbc =newDbc();
+    $content =addslashes($content);
+    $query ="insert into message values('".$user."','".time()."','".$content."','0','".$from."') ";
+    mysqli_query($dbc,$query) or die ($query." add message failed ");
+    $dbc->close();
+}
+
+
+function newDbc()
+{
+    $dbc = new mysqli('localhost',DB_USER,DB_PASSWORD,DB_NAME);
+    $query = "set names 'utf8'";
+    mysqli_query($dbc,$query) or die("db connect  failed");
+    return $dbc;
+
+}
+function db_select($table,$condition ="1")
+{
+    $dbc =newDbc();
+    $query = "select * from ".$table." where ".$condition;
+    $result =mysqli_query($dbc,$query) or die ($query."failed!");
+    return $result;
+
+
+}
+function show5info()
+{
+    echo " <table class='table table-hover '> <tbody> ";
+    $dbc =newDbc();
+    $query = "SELECT * FROM info where type ='通知' ORDER BY date DESC;";
+    $result =mysqli_query($dbc,$query);
+    $num_results = $result->num_rows;
+    $total_results = $num_results;
+    //只显示最近五条
+    if($num_results >10)  $num_results =10;
+    $i = 0;
+    while($i<$num_results)
+    {
+        $row = mysqli_fetch_array($result);
+        $i++;
+        echo "<tr><td><p>".date("Y-m-d H:i 星期",$row['date']).trans($row['date'])."</p>"
+                .nl2br($row['content']).
+                "</td></tr>";
+    }
+    echo " </tbody> </table> ";
+    echo ' <a href="search.php?all=true&q=+" class="btn">查看全部通知</a> ';
+
+
+}
+
+function trans($timeString){
+    switch(date('w',$timeString)){
+    case 0:return '日';
+    case 1:return '一';
+    case 2:return '二';
+    case 3:return '三';
+    case 4:return '四';
+    case 5:return '五';
+    case 6:return '六';
+    }
+}
+function writelist($parent,$dbc,$showUser =false){
+    $root =$_SERVER['DOCUMENT_ROOT'];
+    $query = "SELECT * FROM resource where subject ='".$parent."'ORDER BY date DESC;";
+    echo' <table style="background:white" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+        <th style="width:30px;text-align:center;">#</th>
+        <th style="width:420px;">名称</th>
+        <th style="width:70px;">文件大小</th>';
+    if($showUser == true) echo ' <th style="width:70px;">上传者</th>';
+    echo' <th style="width:70px;">上传时间</th>
+        <th style="width:30px;">热度</th>';
+if($showUser == true) echo ' <th style="width:30px;">评论</th>';
+        echo'
+        </tr>
+        </thead>
+        <tbody>
+        '; 
+    if($r = mysqli_query($dbc,$query)){  
+        $index = 1;  
+        while($row = mysqli_fetch_array($r)){
+          //  if(is_file($root.'/upload/'.$parent.'/'.$row['name']))
+          //  {
+                $size = filesize($root.'/upload/'.$parent.'/'.$row['name'])/1024/1024;
+                $size = number_format($size,2);
+                //两位小数
+                $description = $row['description'];
+                $commentNum =$row['comment'];
+                echo "<tr>
+                    <td style='text-align:center;'>".$index."</td>
+                    <td>
+                    <a href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
+                    </td>
+                    <td>".$size."MB</td>";
+
+                if($showUser == true)
+                    echo" <td>".$row['user']."</td>";
+
+                echo"
+                    <td>".date("Y/m/d",$row['date'])."</td>
+                    <td>".$row['downloadtimes']."</td>";
+                if($showUser == true) echo "
+                    <td> <a href=\"#fileinfo\" onclick='loadComment(\"fileinfo.php?subject=".$parent."&file=".$row['date']."\")' role=\"button\" data-toggle=\"modal\">".$commentNum."</a> </td>";
+                echo " </tr> ";
+                $index++;
+          //  }
+           // else
+            //    echo $row['name']."not a file";
+
+
+        }
+    }else{
+        echo mysqli_error($dbc);
+    }
+    echo " </tbody> </table> ";
+}
+
+
+
+?>

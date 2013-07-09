@@ -1,0 +1,3 @@
+<?php
+mkdir("../upload/dd/");
+?>
