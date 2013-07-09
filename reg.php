@@ -64,8 +64,15 @@ if($allow_to_reg && isset($_POST['reg']) )
         }
          */
 
+        $query = "select count(*) from user";
+        $result =mysqli_query($dbc,$query);
+        $row =mysqli_fetch_row($result);
+        $number = $row[0];
+        if($number == 0)
+          $query = "INSERT INTO user (name,nickname,password,ip,email,coin,checkdays,admin,addInfo) values ('".$name."','".$name."','".sha1($pass1)."','".$ip."','".$email."','100','0','1','1')";
+        else
+          $query = "INSERT INTO user (name,nickname,password,ip,email,coin,checkdays) values ('".$name."','".$name."','".sha1($pass1)."','".$ip."','".$email."','100','0')";
 
-        $query = "INSERT INTO user (name,nickname,password,ip,email,coin,checkdays) values ('".$name."','".$name."','".sha1($pass1)."','".$ip."','".$email."','100','0')";
         $sub = mysqli_query($dbc,$query);
         if($sub)
         {
