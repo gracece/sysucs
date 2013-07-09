@@ -1,6 +1,9 @@
 <?php
+define("CODE","code");
 require("header.html");
 require("./functions.php");
+
+
 
 session_start();
 if(isset($_SESSION['preTime']))
@@ -36,7 +39,7 @@ if($allow_to_reg && isset($_POST['reg']) )
         echo "两次输入密码不一致！";
     else if($pass1 =='')
         echo "空密码是什么心态！";
-    else if($code !="code")
+    else if($code !=CODE)
         echo "邀请码错误";
     else
     {
