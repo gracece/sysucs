@@ -5,6 +5,7 @@
 
 一开始是想给班级寻求一种 QQ群共享资源 的替代品，本想在SAE 用现成的论坛来实现，但是速度太慢而且使用效果不佳，太多冗余的东西了。
 最初的idea来自 [Gavin](https://github.com/gavinhub) ,在SAE上实现了最基本的资源上传、分类、下载。再后来，[saucebing](https://github.com/saucebing)提供了局域网内的服务器，Gavin 把代码移植到本地，后面的版本都是基于这一个框架来扩展。在此对以上两位表示感谢。
+另外一些问题说明可移步 [my blog] (http://gracece.net/2013/06/sysucs-rework/)
 
 ### 基本功能
 - 用户注册与登陆
@@ -17,12 +18,13 @@
 - 简单的消息通知
 - 迷你论坛
 
-界面预览
+### 界面预览
 ![sysucs](http://ww3.sinaimg.cn/large/50b560a5gw1e5smmdwahlj211y0lcn28.jpg)
 
 ### 遗留问题
 
-有些设置的更改没有在php代码提供，直接暴力改数据库。
+- 有些设置的更改没有在php代码提供，直接暴力改数据库。
+- 仍可能留有一些安全性漏洞。
 
 ### 使用方法
 	
