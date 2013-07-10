@@ -86,95 +86,13 @@ if($_SESSION['admin'] ==1)
 
 <form action="insert_info.php" method="post">
 <p>输入通知内容(可以使用下列按钮以获得更好的格式):</p>
-<div class="alert alert-info">外网服务器网速给跪了T_T，发消息请耐心等待几秒外网服务器响应,一般不会失败的。</div>
 <div class="alert"> 图床：<a href="http://tuchuang.duapp.com">baidu</a> <a href="http://weibotuchuang.sinaapp.com/">sina</a> </div>
 <p>懒得搞编辑器了，凑合着用吧XD </p>
 <textarea id="content" name="content" style="width: 900px; height: 200px"> </textarea>
-<!--
-<script>
-var editor = new TINY.editor.edit('editor', {
-	id: 'content',
-	width: 940,
-	height: 175,
-	cssclass: 'tinyeditor',
-	controlclass: 'tinyeditor-control',
-	rowclass: 'tinyeditor-header',
-	dividerclass: 'tinyeditor-divider',
-	controls: ['bold', 'italic', 'underline', 'strikethrough', '|', 'subscript', 'superscript', '|',
-		'orderedlist', 'unorderedlist', '|', 'outdent', 'indent', '|', 'leftalign',
-		'centeralign', 'rightalign', 'blockjustify', '|', 'unformat', '|', 'undo', 'redo', 'n',
-		'font', 'size', 'style', '|', 'image', 'hr', 'link', 'unlink', '|', 'print'],
-	footer: true,
-	fonts: ['Verdana','Arial','Georgia','Trebuchet MS'],
-	xhtml: true,
-	bodyid: 'editor',
-    
-	footerclass: 'tinyeditor-footer',
-	toggle: {text: 'source', activetext: 'wysiwyg', cssclass: 'toggle'},
-	resize: {cssclass: 'resize'}
-});
-
-</script>
--->
 <br />
 <input type="submit" class ="btn btn-large" style="margin-right:3px;" value="发布" />
 
 </form>
-<!--_
-    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-      <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
-          <ul class="dropdown-menu">
-          </ul>
-        </div>
-      <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-          <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-          <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-          <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
-          </ul>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
-        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
-        <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
-        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
-        <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
-        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
-        <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
-        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
-        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
-        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
-      </div>
-      <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
-    <div class="dropdown-menu input-append">
-    <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-    <button class="btn" type="button">Add</button>
-        </div>
-        <a class="btn" data-edit="uniqidlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
-
-      </div>
-      
-      <div class="btn-group">
-        <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
-        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
-        <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
-      </div>
-      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
-    </div>
-<div id="editor"> hh</div>
--->
 <?php
         error_reporting(E_ALL);
 $dbc =newDbc();
@@ -219,19 +137,10 @@ $query = "SELECT * FROM info ORDER BY date DESC;";
                   <input name='deleteContent' type='hidden' value='".$row['content']."' />
                   <input type='submit'class='btn btn-danger' value='delete' />
                   </form>
-
-                  
-                  </td>
-                  
-";
-              
+                  </td> ";
           }
 
 ?>
-
     </div>
-          <script type="text/javascript">
-$('#editor').wysiwyg();          
-</script>
 </body>
 </html>
