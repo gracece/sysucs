@@ -60,7 +60,7 @@ echo ' <option value="'.$row['subject'].'">'.$row['name'].'</option>';
             $subjectInfo = db_select("setting","subject='".$subject."'");
             $row = mysqli_fetch_array($subjectInfo);
             echo "<h2>".$row['name']."</h2>";
-            if($row['remark'] !='none')
+            if($row['remark'] !='')
                 echo "<div class='alert alert-info'>".$row['remark']."</div>";
             writelist($subject,$dbc,true);
         }
