@@ -64,7 +64,7 @@ if($_SESSION['admin'] ==1)
     echo '
     <li> <a href="wadmin.php" >文件管理</a> </li>
 <li> <a href="viewUsers.php">用户管理</a> </li>
-<li> <a href="setting.php"> 科目设置</a> </li>
+<li> <a href="setting.php"> 网站设置</a> </li>
 ';
 }
 
@@ -85,7 +85,7 @@ if($_SESSION['admin'] ==1)
 <div class="container">
 
 <form action="insert_info.php" method="post">
-<p>输入通知内容(可以使用下列按钮以获得更好的格式):</p>
+<p>输入通知内容</p>
 <div class="alert"> 图床：<a href="http://tuchuang.duapp.com">baidu</a> <a href="http://weibotuchuang.sinaapp.com/">sina</a> </div>
 <p>懒得搞编辑器了，凑合着用吧XD </p>
 <textarea id="content" name="content" style="width: 900px; height: 200px"> </textarea>
