@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
   `title` tinytext NOT NULL,
   `content` tinytext NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `banner`
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
 
 INSERT INTO `banner` (`ID`, `imgUrl`, `title`, `content`) VALUES
 (1, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-01.jpg', 'test1', 'content'),
-(2, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-02.jpg', 'test1', 'content2'),
+(2, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-02.jpg', 'test2', 'content2'),
 (3, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-03.jpg', 'nice', 'content3');
 
 -- --------------------------------------------------------
