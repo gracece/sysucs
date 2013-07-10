@@ -1,14 +1,7 @@
 <?php
 require_once("functions.php");
-$ip= get_user_ip();
-if($ip == "172.18.187.103")
-{
-    echo "hehe";
-    //呵呵师兄
-    exit;
-}
 require_once("auth_head.php");
-
+$ip= get_user_ip();
 
 $dbc =newDbc();
 ?>
@@ -57,8 +50,7 @@ $dbc =newDbc();
 <?php
 $user =$_SESSION['user'];
 echo '<a href="setting" class="navbar-link"><i style="margin-top:3px" class="icon-user icon-white"></i>'.$user.'</a>';
-//if($_SESSION['auto'] == 0)
-    echo" <a href='?userout=1' title='绑定ip无法登出' class='navbar-link' ><i style='margin-top:3px' class='icon-off icon-white'></i>登出</a>  ";
+echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class='icon-off icon-white'></i>登出</a>  ";
 ?>
             </p>
             <ul class="nav">
@@ -67,6 +59,7 @@ echo '<a href="setting" class="navbar-link"><i style="margin-top:3px" class="ico
               <li><a href="setting/message.php">消息</a></li>
               <li><a href="setting/rank.php">排行榜</a></li>
               <li><a href="setting/dandan.php">辉宇蛋蛋店</a></li>
+         <?php if ($_SESSION['addInfo'] == 1) echo ' <li><a href="admin">后台管理</a></li>'; ?>
             </ul>
 <form action="search.php"  class="navbar-search">
 <input  name="q" type="text" placeholder="搜索通知或资源..." class="search-query" />
@@ -78,7 +71,6 @@ echo '<a href="setting" class="navbar-link"><i style="margin-top:3px" class="ico
 
 <div id="fileinfo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  评论在这里
-
 </div>
 
     <div class="container-fluid">
@@ -188,7 +180,7 @@ $result =mysqli_query($dbc,$query);
 $row = mysqli_fetch_array($result);
 echo "<div><h3>计科币:<code style='font-size:large'>".$row[0]."</code>  <small>排名".$row[1]."</small></h3></div>";
 
-//记录访问信息并显示给用户今日第几次
+//记录访问信息
 $today = date("Y/m/d");
 $date_second = strtotime($today);
 $query = "SELECT * FROM visitors WHERE date >=".$date_second." AND user ='".$_SESSION['user']."' ORDER BY date DESC ";
@@ -204,7 +196,6 @@ if($visitDate - $lastVisitTime >120) //和上次访问相差2分钟才写入数�
     mysqli_query($dbc,$query);
     $todayVisit ++;
 }
-//echo "这是您今日第<code>".$todayVisit."</code>次访问.</p>";
 
 //显示签到按钮
 $query = "SELECT * FROM coin WHERE date >=".$date_second." AND user ='".$user."' AND type ='签到' ORDER BY date DESC ";
