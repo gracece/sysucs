@@ -60,5 +60,12 @@ else
   echo "无任何操作！";
   exit;
 }
+?>
+
+</div>
+
+<a class='btn' href="/">回到首页</a>
+<a class='btn' href="setting.php">设置页面</a>
+
 
 
