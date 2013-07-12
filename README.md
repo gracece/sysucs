@@ -32,6 +32,8 @@
 - 没有提供上传进度提示，在上传大文件时候体验不佳。
 
 ### 使用方法
+
+在`lamp`上运行完全没有问题，因为没有太多的依赖，所以在`lnmp` 或是 windows下应该也是能跑起来的，可能会涉及到小部分代码的更改。
 	
 	git clone https://github.com/gracece/sysucs.git
 
