@@ -335,8 +335,6 @@ while($i<$num_results)
 <strong>友情链接：</strong>
   <a href="http://weibo.com/sysucs2011" target="_blank">@中大11级计科一班</a>
   &nbsp<a href="http://dwz.cn/cs-tb" target="_blank">中大计科一班吧</a>
-  <a href="./offline-download">离线下载</a>
-<a href='./game/clickAndDraw/'>你画我擦</a>
 </p>
 
         <p class="text-center muted">Copyright &copy; SYSUCS.ORG 2012-2013</p>
