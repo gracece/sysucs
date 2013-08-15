@@ -1,27 +1,36 @@
 <?php
 require('functions.php');
 $ip =get_user_ip();
+$dbc =newDbc();
 session_start();
 
 $url =safeGet("url");
 if($url==NULL)
     $url="index.php";
 
-/*
- //自动登陆部分
-$dbc = newDbc();
-$query = "SELECT * FROM user where ip ='".$ip."'";
-$result = mysqli_query($dbc,$query);
-$row = mysqli_fetch_row($result);
-$count = $result->num_rows;
-if($count >0 )
+if (isset($_COOKIE['sso']))
 {
-    $_SESSION['right']=1;
-    $_SESSION['user']=$row[0];
-    $_SESSION['auto']=1;
+    $sso = addslashes($_COOKIE['sso']);
+    $query = "SELECT * FROM cookie  where sso ='".$sso;
+    $result = mysqli_query($dbc,$query);
+    if(!$result)
+    {
+        echo "数据查询失败！";
+        exit;
+    }
+    $count = $result->num_rows;
+    if($count >0 )
+    {
+        $row = mysqli_fetch_row($result);
+        $user = $row['user'];
+        setSession($user);
+        header("Location:".$url);
+        exit;
+    }
+
+
 }
 
- */
 
 if(isset($_SESSION['right'])&&$_SESSION['right']==1)
 {
@@ -42,6 +51,10 @@ require("header.html");
         <br />
         <input id="password" name="password" placeholder="Password" type="password" />
         <br />
+        <label class="checkbox">
+          <input type="checkbox"  name="remember"> Remember me 
+        </label>
+
         <span><a class="btn" href="reg.php" >注册</a></span>
         <input type="submit" style="float:right;" class="btn btn-primary" value="登录" />
       </form>
@@ -50,8 +63,9 @@ require("header.html");
 <?php
 if(isset($_POST['login']))
 {
-    $user =$_POST['username'];
-    $password = $_POST['password'];
+    $user =safePost('username');
+    $password = safePost('password');
+    $remember = safePost('remember');
     //connect to mysql
     $dbc =newDbc();
     $query = "SELECT * FROM user where name ='".$user."' and
@@ -65,12 +79,15 @@ if(isset($_POST['login']))
     $count = $result->num_rows;
     if($count >0 )
     {
-        $row = mysqli_fetch_array($result);
-        $_SESSION['right']=1;
-        $_SESSION['user']=$user;
-        $_SESSION['auto'] =0;
-        $_SESSION['admin'] =$row['admin'];
-        $_SESSION['addInfo'] = $row['addInfo'];
+        if($remember=="on")
+        {
+            $seed = $user.time().mt_rand(10,500);
+            $sso = base64_encode(md5($seed));
+            $query = "insert into cookie (sso,user,ip,time) values('".$sso."','".$user."','".$ip."','".time()."')";
+            mysqli_query($dbc,$query);
+            setcookie("sso",$sso,time()+30*24*60*60);
+        }
+        setSession($user);
         header("Location:".$url);
         exit;
     }

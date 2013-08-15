@@ -32,6 +32,18 @@ function html_header($title="计科一班")
 <?php    
 }
 
+function setSession($user)
+{
+    $dbc =newDbc();
+    $query = "SELECT * FROM user where name ='".$user;
+    $result = mysqli_query($dbc,$query);
+    $row = mysqli_fetch_array($result);
+    $_SESSION['right']=1;
+    $_SESSION['user']=$user;
+    $_SESSION['auto'] =0;
+    $_SESSION['admin'] =$row['admin'];
+    $_SESSION['addInfo'] = $row['addInfo'];
+}
 
 function safePost($str)
 {
