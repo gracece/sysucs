@@ -15,7 +15,7 @@ if(isset($_GET['s']))
       <select  name="subject" id="subject" style="width:240px;">
         <option value="none">请选择栏目</option>
         <?php
-$query = "select * from setting";
+$query = "select * from setting where `show`=1";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {

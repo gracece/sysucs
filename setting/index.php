@@ -32,19 +32,8 @@ $query ="select * from user where name='".$user."'";
 $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result);
 
-echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowip."</code>";
-if(isset($_SESSION['auto']) && $_SESSION['auto'] ==1)
-{
-    echo"您正在使用ip自动认证</div>";
-}
-else
-{
-    $query ="select * from user where name = '".$user."'";
-    $result = mysqli_query($dbc,$query);
-    $row = mysqli_fetch_array($result);
-//    echo "您已经绑定ip <code>".$row['ip']."</code> 使用该ip访问本网站将无需登陆。";
-    echo "</div>";
-}
+echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowip."</code>,";
+    echo "如需要自动登录请在登录时勾选 remerber</div>";
 
 ?>
 <div class="row">
@@ -76,9 +65,9 @@ else
       </div>
 
       <div class="control-group">
-        <label class="control-label" >绑定ip </label>
+        <label class="control-label" >Email</label>
         <div class="controls">
-            <input id="ip" name="ip" type="text" value="<?php echo $row['ip']; ?>" />
+            <input id="ip" name="email" type="text" value="<?php echo $row['email']; ?>" />
         </div>
       </div>
 
@@ -106,7 +95,7 @@ else
         <div class="controls">
       <input class ="btn btn-primary" type="submit" value="submit" />
       <p class="help-block">如果不需要更改密码，则新密码留空即可</p>
-      <p class="help-block">如果ip也不需要更改，则当前密码也可以留空</p>
+      <p class="help-block">如果email也不需要更改，则当前密码也可以留空</p>
         </div>
       </div>
 

@@ -9,7 +9,6 @@ if($_SESSION['admin'] !=1)
   exit;
 }
 
-$result = mysqli_query($dbc,$query);
 ?>
 <div style="padding: 0px 0px 50px; margin: 0px; border-width: 0px; height: 0px; display: block;" id="yass_top_edge_padding"></div>
   <div class="navbar  navbar-fixed-top">

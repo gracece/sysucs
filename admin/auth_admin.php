@@ -5,7 +5,6 @@ session_start();
 if($logout ==1)
 {
     $_SESSION['right']=0;
-    $_SESSION['auto'] =0;
     $_SESSION['admin'] =0;
     $_SESSION['addInfo'] =0;
 }

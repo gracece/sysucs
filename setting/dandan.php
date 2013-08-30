@@ -1,6 +1,7 @@
 <?php
 require('../functions.php');
 require('../auth_head.php');
+define("OWNER","湛江下暴雨");
 html_header("计科一班--辉宇蛋蛋店");
 $user = $_SESSION['user'];
 ?>
@@ -25,7 +26,7 @@ $user = $_SESSION['user'];
 <div class="container" >
 
 <?php
-if ($user=="湛江下暴雨" )
+if ($user==OWNER )
 {
     echo "<h3>订单管理</h3>";
     $dbc = newDbc();

@@ -11,7 +11,7 @@ if($url==NULL)
 if (isset($_COOKIE['sso']))
 {
     $sso = addslashes($_COOKIE['sso']);
-    $query = "SELECT * FROM cookie  where sso ='".$sso;
+    $query = "SELECT * FROM cookie  where sso ='".$sso."'";
     $result = mysqli_query($dbc,$query);
     if(!$result)
     {
@@ -21,7 +21,7 @@ if (isset($_COOKIE['sso']))
     $count = $result->num_rows;
     if($count >0 )
     {
-        $row = mysqli_fetch_row($result);
+        $row = mysqli_fetch_array($result);
         $user = $row['user'];
         setSession($user);
         header("Location:".$url);
@@ -83,7 +83,7 @@ if(isset($_POST['login']))
         {
             $seed = $user.time().mt_rand(10,500);
             $sso = base64_encode(md5($seed));
-            $query = "insert into cookie (sso,user,ip,time) values('".$sso."','".$user."','".$ip."','".time()."')";
+            $query = "insert into cookie (sso,user,ip,time,ua) values('".$sso."','".$user."','".$ip."','".time()."','".$_SERVER['HTTP_USER_AGENT']."')";
             mysqli_query($dbc,$query);
             setcookie("sso",$sso,time()+30*24*60*60);
         }

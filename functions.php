@@ -35,14 +35,13 @@ function html_header($title="计科一班")
 function setSession($user)
 {
     $dbc =newDbc();
-    $query = "SELECT * FROM user where name ='".$user;
+    $query = "SELECT * FROM user where name ='".$user."'";
     $result = mysqli_query($dbc,$query);
     $row = mysqli_fetch_array($result);
     $_SESSION['right']=1;
     $_SESSION['user']=$user;
-    $_SESSION['auto'] =0;
-    $_SESSION['admin'] =$row['admin'];
-    $_SESSION['addInfo'] = $row['addInfo'];
+    $_SESSION['admin'] = intval($row['admin']);
+    $_SESSION['addInfo'] = intval($row['addInfo']);
 }
 
 function safePost($str)

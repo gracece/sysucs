@@ -9,7 +9,7 @@ $dbc =newDbc();
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>计科一班-HOME-外网版</title>
+    <title>计科一班-HOME-</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="sysucs.org">
     <meta name="author" content="gavin & grace">
@@ -74,16 +74,16 @@ echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class=
 </div>
 
     <div class="container-fluid">
- <div class="visible-phone"> <a href="mission.php" class="btn btn-primary">签到</a> </div>
+    <div class="visible-phone"> <a href="mission.php?t=<?php echo md5(md5(strtotime('today'))."sysucs"); ?>" class="btn btn-primary">签到</a> </div>
 
       <div class="row-fluid">
         <div class="span1" style="width:3%;min-height:3px"></div>
         <div class="span2" >
-          <div class=" sidebar-nav">
+          <div class=" sidebar-nav";>
             <ul class="nav nav-tabs nav-stacked">
               <li class="nav-li" style=" border-top-left-radius: 5px; border-top-right-radius: 5px;" id="index"> <a href="?"><i class="icon-home"></i>首页</a> </li>
               <?php
-$query = "select * from setting";
+$query = "select * from setting where `show`=1";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {
@@ -202,7 +202,7 @@ $query = "SELECT * FROM coin WHERE date >=".$date_second." AND user ='".$user."'
 $todayResult =mysqli_query($dbc,$query);
 $todayVisit = $todayResult->num_rows;
 if($todayVisit == 0)
-    echo " <a class='btn btn-large btn-primary' target='_blank' href=\"mission.php\">签到!</a><br /> ";
+    echo " <a class='btn btn-large btn-primary' target='_blank' href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
 else
 {
     $query ="select * from user where name ='".$user."'";

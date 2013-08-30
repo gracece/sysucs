@@ -36,9 +36,12 @@
   background:#fff;
   font-size:16px;
   width:220px;
-      
 
+}
 
+.auth_form form
+{
+  margin:0px;
 }
 .header {
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 

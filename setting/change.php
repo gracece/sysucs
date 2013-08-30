@@ -14,7 +14,7 @@ $nowip =get_user_ip();
 if(isset($_POST['old']))
 {
     //  $newuser = $_POST['name'];
-    $ip = safePost('ip');
+    $email = safePost('email');
     $old = safePost('old');
     $signature = safePost('signature');
     $signature = substr($signature,0,180);
@@ -78,22 +78,20 @@ if(isset($_POST['old']))
         if($row['password'] == sha1($old))
         {
             //匹配172.18字段ip
+            /*
             $pattern ='/^172.18(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){2}$/';
             if(!preg_match($pattern,$ip,$match))
             {
                 echo "ip格式错误！！";
                 exit;
             }
+             */
 
             if($new1 =='')
-                $query = "update user set ip ='".$ip."' where name ='".$user."'";
+                $query = "update user set email ='".$email."' where name ='".$user."'";
             else
                 $query = "update user set password = '".sha1($new1)."' , ip ='".$ip."' where name ='".$user."'";
             $result = mysqli_query($dbc,$query);
-            if($ip ==$nowip)
-                $_SESSION['auto'] =1;
-            else 
-                $_SESSION['auto'] =0;
             if($result)
                 echo "更改成功！";
             else

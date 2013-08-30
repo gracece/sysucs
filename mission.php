@@ -36,14 +36,11 @@ if((date("H") == 23 && date("i")>55) || (date("H") ==0 && date("i") <5))
         $dbc =newDbc();
         if(time()-$_SESSION['preTime'] <mt_rand(3,5))
         {
-            echo "访问太频繁，请至少3秒后再试试！";
             $_SESSION['preTime'] = time();
             $ua = $_SERVER['HTTP_USER_AGENT'];
             $visitDate = date('U');
             $query = "INSERT INTO visitors values ('".$visitDate."','M".$ip."','".$ua." ','".$_SESSION['user']."')";
             mysqli_query($dbc,$query);
-            exit;
-            header("Location:./hehe-failed.txt");
         }
     }
     $_SESSION['preTime'] = time();
@@ -76,51 +73,57 @@ else
 
 if($todaycheck == 0)
 {
-
-    $query = "select * from coin where user='".$user."' and type ='签到' order by date desc";
-    $result =mysqli_query($dbc,$query);
-    $row =mysqli_fetch_array($result);
-    $lastcheckday = $row['date'];
-
-    if(date("m/d",$lastcheckday) == date("m/d",strtotime("-1 day")))
+    $t = safeGet('t');
+    if($t == md5(md5(strtotime('today'))."sysucs"))
     {
-        //昨天已经签到，连续签到日期加一
-        echo "昨日已经签到，连续签到日期+1。";
-        $query ="update user set checkdays = checkdays +1 where name ='".$user."'";
+
+        $query = "select * from coin where user='".$user."' and type ='签到' order by date desc";
+        $result =mysqli_query($dbc,$query);
+        $row =mysqli_fetch_array($result);
+        $lastcheckday = $row['date'];
+
+        if(date("m/d",$lastcheckday) == date("m/d",strtotime("-1 day")))
+        {
+            //昨天已经签到，连续签到日期加一
+            echo "昨日已经签到，连续签到日期+1。";
+            $query ="update user set checkdays = checkdays +1 where name ='".$user."'";
+        }
+        else
+        {
+            echo "上次签到：".date("m/d",$lastcheckday).",连续签到日期置为1!";
+            $query ="update user set `checkdays` =1 where `name` ='".$user."'";
+        }
+        mysqli_query($dbc,$query) or die("check day failed ");
+
+        coinChange($user,$num,"签到");
+        echo "今日你是第".($n+1)."个签到，已经获得<code>".$num."</code>计科币。";
+        //数据库解锁
+        //    mysqli_query($dbc,"unlock tables");
+
+        if (date("H") ==7 &&date("i") <40)
+        {
+            $randomNum =mt_rand(3,5);
+            coinChange($user,$randomNum,"早起奖励");
+            echo "早起奖励<code>+".$randomNum."</code>!";
+        }
+
+        $query ="select * from user where name ='".$user."'";
+        $user_info =mysqli_query($dbc,$query);
+        $row=mysqli_fetch_array($user_info);
+        $days =$row['checkdays'];
+        if($days %10 ==0)
+        {
+            echo "连续".$days."天签到,计科币<code>+15</code>";
+            coinChange($user,15,"连续".$days."天签到奖励");
+        }
+        else
+        {
+            echo "再连续签到".(10-($days %10))."天即可获取<code>15</code>计科币奖励！";
+        }
+
     }
     else
-    {
-        echo "上次签到：".date("m/d",$lastcheckday).",连续签到日期置为1!";
-        $query ="update user set `checkdays` =1 where `name` ='".$user."'";
-    }
-    mysqli_query($dbc,$query) or die("check day failed ");
-
-    coinChange($user,$num,"签到");
-    echo "今日你是第".($n+1)."个签到，已经获得<code>".$num."</code>计科币。";
-    //数据库解锁
-    //    mysqli_query($dbc,"unlock tables");
-
-    if (date("H") ==7 &&date("i") <40)
-    {
-        $randomNum =mt_rand(3,5);
-        coinChange($user,$randomNum,"早起奖励");
-        echo "早起奖励<code>+".$randomNum."</code>!";
-    }
-
-    $query ="select * from user where name ='".$user."'";
-    $user_info =mysqli_query($dbc,$query);
-    $row=mysqli_fetch_array($user_info);
-    $days =$row['checkdays'];
-    if($days %10 ==0)
-    {
-        echo "连续".$days."天签到,计科币<code>+15</code>";
-        coinChange($user,15,"连续".$days."天签到奖励");
-    }
-    else
-    {
-        echo "再连续签到".(10-($days %10))."天即可获取<code>15</code>计科币奖励！";
-    }
-
+        echo "请点击首页签到按钮进行签到 ";
 
 }
 else
@@ -149,14 +152,14 @@ for($i=0;$i<$n;$i++)
         $sum +=$number;
         $chartNum[$number -1] ++;
     }
-    
+
 }
 ?>
 </table>
 </div>
 <?php 
 if($n ==1)
-  exit;
+    exit;
 ?>
 <div class="span6">
 <h3>今日统计 平均<?php echo round($sum/($n-1),2) ?></h3>
@@ -183,10 +186,10 @@ foreach($chartNum as $out) echo $out.',';
 
 var options = {
     scaleOverlay : true,
-    scaleOverride : true,
-    scaleSteps : 10,
-    scaleStepWidth : 1,
-    scaleStartValue : 0,
+        scaleOverride : true,
+        scaleSteps : 10,
+        scaleStepWidth : 1,
+        scaleStartValue : 0,
 };
 new Chart(ctx).Bar(data,options);
 
@@ -198,11 +201,11 @@ new Chart(ctx).Bar(data,options);
 
 echo $user ?>最近统计</h3>
 <canvas id="myChart2"  width="500" height="400"></canvas>
-<script type="text/javascript">
-var ctx2 = $("#myChart2").get(0).getContext("2d");
+    <script type="text/javascript">
+    var ctx2 = $("#myChart2").get(0).getContext("2d");
 var myNewChart2 = new Chart(ctx2);
 <?php
-$query ="select * from coin where type='签到' and user ='".$user."' order by date desc limit 10 ";
+    $query ="select * from coin where type='签到' and user ='".$user."' order by date desc limit 10 ";
 $result =mysqli_query($dbc,$query);
 $i=0;
 while ($row =mysqli_fetch_array($result))
@@ -219,7 +222,7 @@ var data2 = {
 for ($i=$tempCount;$i>=0;$i--)
     echo '"'.date("m/d",$temp[$i]['date']).'",'; 
 ?> ],
-        datasets : [
+    datasets : [
 {
     fillColor : "rgba(151,187,205,0.5)",
         strokeColor : "rgba(151,187,205,1)",
@@ -234,10 +237,10 @@ for ($i=$tempCount;$i>=0;$i--)
 
 var options2 = {
     scaleOverlay : true,
-    scaleOverride : true,
-    scaleSteps : 15,
-    scaleStepWidth : 1,
-    scaleStartValue : 0,
+        scaleOverride : true,
+        scaleSteps : 15,
+        scaleStepWidth : 1,
+        scaleStartValue : 0,
 };
 new Chart(ctx2).Line(data2,options2);
 
