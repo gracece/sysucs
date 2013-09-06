@@ -56,7 +56,7 @@ function clock(){
     document.title = "本窗口将在"+i+"秒后自动关闭!";
     document.getElementById("countdown").innerHTML =  "本窗口将在"+i+"秒后自动关闭!";
     if(i>0)setTimeout("clock();",1000);
-    else self.close();
+//    else self.close();
     }
     var i=2;
     clock();
