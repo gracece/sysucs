@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
 CREATE TABLE IF NOT EXISTS `setting` (
   `subject` char(22) NOT NULL,
   `name` char(33) NOT NULL,
+  `show` int(11) NOT NULL DEFAULT '1',
   `remark` text NOT NULL,
   UNIQUE KEY `subject` (`subject`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
