@@ -61,7 +61,7 @@ function loadInfo(url)
         document.getElementById('moreinfo').innerHTML=xmlhttp.responseText;
       }
       else
-        document.getElementById('moreinfo').innerHTML='<img src="img/load.gif"><img src="img/load.gif"><img src="img/load.gif"><span>其实在校园网这么快你根本不会看到加载图片=.=,看到了有奖！！';
+        document.getElementById('moreinfo').innerHTML='<img src="img/load.gif"><img src="img/load.gif"><img src="img/load.gif"><span>其实在校园网这么快你根本不会看到加载图片=.=,看到了有奖！！</span>';
   }
 
   xmlhttp.open("GET",url+"&time="+Math.random()*1234,true);
