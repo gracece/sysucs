@@ -1,9 +1,8 @@
 <?php
-define("CODE","code");
+define("CODE","helloworld");
 require("header.html");
 require("./functions.php");
-
-
+$allow_to_reg = true;
 
 session_start();
 if(isset($_SESSION['preTime']))
@@ -18,23 +17,15 @@ if(isset($_SESSION['preTime']))
 $_SESSION['preTime'] = time();
 
 $ip = get_user_ip();
-$allow_to_reg = true;
 if($allow_to_reg && isset($_POST['reg']) )
 {
-    /*
-    $pattern ='/^172.18(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){2}$/';
-    if(!preg_match($pattern,$ip,$match))
-    {
-        echo "请使用生活区ip注册！";
-        exit;
-    }
-     */
 
     $name =safePost('name');
     $pass1 =safePost('pass1');
     $pass2 =safePost('pass2');
     $code =safePost('code');
     $email =safePost('email');
+    $schoolnumber = safePost('schoolnumber');
     if($pass1 != $pass2)
         echo "两次输入密码不一致！";
     else if($pass1 =='')
@@ -72,15 +63,18 @@ if($allow_to_reg && isset($_POST['reg']) )
         $row =mysqli_fetch_row($result);
         $number = $row[0];
         if($number == 0)
-          $query = "INSERT INTO user (name,nickname,password,ip,email,coin,checkdays,admin,addInfo) values ('".$name."','".$name."','".sha1($pass1)."','".$ip."','".$email."','100','0','1','1')";
+          $query = "INSERT INTO user (name,nickname,number,password,ip,email,coin,checkdays,admin,addInfo) values ('".$name."','".$name."','".$schoolnumber."','".sha1($pass1)."','".$ip."','".$email."','100','0','1','1')";
         else
-          $query = "INSERT INTO user (name,nickname,password,ip,email,coin,checkdays) values ('".$name."','".$name."','".sha1($pass1)."','".$ip."','".$email."','100','0')";
+          $query = "INSERT INTO user (name,nickname,number,password,ip,email,coin,checkdays) values ('".$name."','".$name."','".$schoolnumber."','".sha1($pass1)."','".$ip."','".$email."','100','0')";
 
         $sub = mysqli_query($dbc,$query);
         if($sub)
         {
+            addMessage("grace","新用户 ".$name);
             echo "ok!";
-            header("Location:index.php");
+            echo"
+                <a href='/'>马上登录看看</a>
+                ";
         }
         else 
             echo "failed!";
@@ -101,13 +95,15 @@ else
 ?>
 <form method="post">
 <input name="reg" value="1" type="hidden" />
-<p>name</p>
+<p>用户名</p>
 <input id="name" name="name" type="text" />
-<p>email</p>
+<p>Email</p>
 <input  name="email" type="email" />
-<p>password</p>
+<p>学号</p>
+<input  name="schoolnumber" type="text" />
+<p>密码</p>
 <input id="pass1" name="pass1" type="password" />
-<p>password again</p>
+<p>确认密码</p>
 <input id="pass2" name="pass2" type="password" />
 <p>邀请码</p>
 <input name="code"  type="text" />

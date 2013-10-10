@@ -96,7 +96,7 @@ while($row =mysqli_fetch_array($result))
 <p>中文名称</p>
 <input  name="name" type="text" />
 <p>备注</p>
-<textarea  name="remark" rows="5" cols="50"></textarea>
+<textarea  name="remark" rows="5" cols="50">none</textarea>
 <br />
 <input class='btn btn-primary' type="submit" value="ADD" />
 

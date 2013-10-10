@@ -24,10 +24,14 @@ if($type == "add")
 {
   $subject = safePost('subject');
   $name = safePost('name');
-  $remark = safePost('remark');
+  $remark = $_POST['remark'];
 
-  $query = "insert into setting (subject,name,remark) values('".$subject."','".$name."','".$remark."') ";
-  mysqli_query($dbc, $query) or die ("add subject failed". $query);
+  DB::insert( 'setting',array(
+          'subject'=>$subject,
+          'name'=>$name,
+          'remark'=>$remark
+      ));
+
   $stucture = "../upload/".$subject."/";
   if(!mkdir($stucture,0777))
   {
@@ -39,9 +43,14 @@ else if($type=="change")
 {
   $subject = safePost('subject');
   $name = safePost('name');
-  $remark = safePost('remark');
-  $query = "update setting set name='".$name."',remark='".$remark."' where subject ='".$subject."'";
-  mysqli_query($dbc,$query) or die ("update failed ". $query);
+  $remark = $_POST['remark'];
+
+    DB::update( 'setting',array(
+          'name'=>$name,
+          'remark'=>$remark
+      ),"subject=%s",$subject);
+
+
   echo "更改成功！";
 }
 else if($type=="banner")

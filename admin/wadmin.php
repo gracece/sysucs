@@ -32,7 +32,7 @@ if($_SESSION['admin'] !=1)
         left:90%;
       }
     </style>
-    <script type="text/javascript" src="js/scrolltop.js"></script>
+    <script type="text/javascript" src="../js/scrolltop.js"></script>
 <script type="text/javascript">
 function reloadPage(){
   window.location.reload();
@@ -144,7 +144,7 @@ function ListFiles($Spath){
     <th>名称(按上传时间排序)</th>
     <th style="width:80px;">文件大小</th>
     <th style="width:90px;">下载时间</th>
-    <th style="width:45px;">操作</th>
+    <th style="width:95px;">操作</th>
     </tr>
     </thead>
     <tbody> '; 
@@ -173,7 +173,10 @@ function ListFiles($Spath){
     echo "<input type='hidden' name='pathToD' value='".$orginSpath."'/>";
     echo "<input type='hidden' name='fileToD' value='".$element['key']."'/>"; 
     echo "<input class='btn-danger' type='submit' style='padding:0 0 ;' name='submit' value='delete' style='margin:0 0 0px;'/>";
-    echo "</td></form></tr>";
+       echo" <a href=file-move.php?subject=".$orginSpath."&file=".urlencode($element['key'])." style='padding:0 0 ;' class='btn btn-inline'>Move</a>";
+    echo "</form>
+        
+        </td></tr>";
   }
   echo "</table>";
 

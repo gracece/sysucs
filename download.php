@@ -23,7 +23,7 @@ if(isset($_GET['subject']) && isset($_GET['file']))
 
     if($result==false ||$result->num_rows == 0)
     {
-        echo "没有这个文件,或者该文件已经被管理员删除！";
+        echo "没有这个文件,或者该文件已经被管理员删除,或移动到其他科目！";
         exit;
     }
     else{

@@ -15,13 +15,14 @@ if(isset($_GET['s']))
       <select  name="subject" id="subject" style="width:240px;">
         <option value="none">请选择栏目</option>
         <?php
-$query = "select * from setting where `show`=1";
+$query = "select * from setting where `show`=1 AND major<8 order by CONVERT(name USING GBK)";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {
 echo ' <option value="'.$row['subject'].'">'.$row['name'].'</option>';
 }
 ?>
+ <option value="film">电影</option> <option value="ebooks">好书共享</option> <option value="photos">精彩瞬间</option> <option value="others">其他</option> 
       </select>
       <br />
       <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />

@@ -82,22 +82,86 @@ echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class=
           <div class=" sidebar-nav";>
             <ul class="nav nav-tabs nav-stacked">
               <li class="nav-li" style=" border-top-left-radius: 5px; border-top-right-radius: 5px;" id="index"> <a href="?"><i class="icon-home"></i>首页</a> </li>
-              <?php
-$query = "select * from setting where `show`=1";
+
+<li class="nav-li" id="major_1"> <i class="icon-chevron-right icon-margintop"></i> <a href="#"  >计算机科学与技术</a></li>
+
+<div class="sub-dev" id="sub_1" > 
+
+<ul class="nav nav-pills nav-stacked">
+             <?php
+$sub_index=1;
+$query = "select * from setting where `show`=1 AND (major=4 OR major =7) order by CONVERT(name USING GBK)";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {
 ?>
-  <li class="nav-li" id="<?php echo $row['subject']?>">
+  <li class="nav-li" id="<?php echo $row['subject'];?>" name= "<?php echo $row['subject'];?>" >
 <i class="icon-chevron-right"></i>
-<a href="#"  onclick='loadXML("ajax/ls-inner.php","<?php echo $row['subject'] ?>")'><?php echo $row['name'] ?></a></li>
+<a href="#detail"  onclick='loadXML("ajax/ls-inner.php","<?php echo $row['subject'] ?>")'><?php echo $row['name'] ?></a></li>
     <?php } ?>
 
-              <li class="nav-li" style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; " id="upload"> <i class="icon-chevron-right"></i><a href="#"  onclick='loadXML("ajax/ls-inner.php","upload")'>我要上传</a> </li>
+    </ul>
+    </div>
+
+
+
+
+<li class="nav-li" id="major_2"> <i class="icon-chevron-right icon-margintop"></i> <a href="#"  >网络工程</a></li>
+
+
+<div class="sub-dev" id="sub_2"> 
+<ul class="nav nav-pills nav-stacked">
+             <?php
+$query = "select * from setting where `show`=1 AND (major=2 OR major =7) order by CONVERT(name USING GBK)";
+$result = mysqli_query($dbc,$query);
+while($row = mysqli_fetch_array($result))
+{
+?>
+  <li class="nav-li" id="<?php echo $row['subject'];?>" name= "<?php echo $row['subject'];?>" >
+<i class="icon-chevron-right"></i>
+<a href="#detail"  onclick='loadXML("ajax/ls-inner.php","<?php echo $row['subject'] ?>")'><?php echo $row['name'] ?></a></li>
+    <?php } ?>
+
+    </ul>
+
+</div>
+
+
+<li class="nav-li" id="major_3"> <i class="icon-chevron-right icon-margintop"></i> <a href="#"  >信息安全</a></li>
+
+<div class="sub-dev" id="sub_3" > 
+<ul class="nav nav-pills nav-stacked">
+             <?php
+$query = "select * from setting where `show`=1 AND (major=1 OR major=7) order by CONVERT(name USING GBK)";
+$result = mysqli_query($dbc,$query);
+while($row = mysqli_fetch_array($result))
+{
+?>
+  <li class="nav-li" id="<?php echo $row['subject'];?>" name= "<?php echo $row['subject'];?>" >
+<i class="icon-chevron-right"></i>
+<a href="#detail"  onclick='loadXML("ajax/ls-inner.php","<?php echo $row['subject'] ?>")'><?php echo $row['name'] ?></a></li>
+    <?php } ?>
+
+</ul>
+</div>
+
+
+              <?php
+$query = "select * from setting where `show`=1 AND major=8 order by CONVERT(name USING GBK)";
+$result = mysqli_query($dbc,$query);
+while($row = mysqli_fetch_array($result))
+{
+?>
+  <li class="nav-li" id="<?php echo $row['subject'];?>" name= "<?php echo $row['subject'];?>" >
+<i class="icon-chevron-right icon-margintop"></i>
+<a href="#detail"  onclick='loadXML("ajax/ls-inner.php","<?php echo $row['subject'] ?>")'><?php echo $row['name'] ?></a></li>
+    <?php } ?>
+
+              <li class="nav-li" style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; " id="upload"> <i class="icon-chevron-right icon-margintop"></i><a href="#"  onclick='loadXML("ajax/ls-inner.php","upload")'>我要上传</a> </li>
             </ul>
           </div><!--/.sidebar-nav -->
         </div><!--/span-->
-
+<a name="detail" class="target-fix"></a>
         <div class="span9" id="more" >
             <div class="row" style="background:white;box-shadow:3px 3px #ddd;margin-left:0.1%;border-radius:5px;border:1px solid #d3d3d3;">
                <div class="span9" style="border-right:1px solid #d3d3d3">
@@ -135,7 +199,7 @@ if (time() -$row['date'] < 24*60*60)
         <a class="close" data-dismiss="alert">×</a>';
     if ($row['type'] == "资源更新")
     {
-        echo strtoupper($row['subject'])."新资源！by ".$row['ip'].' '.$row['content'];
+        echo getNameBySubject($row['subject'])." 新资源！by ".$row['ip'].' '.$row['content'];
     }
     else
         echo nl2br($row['content']);
@@ -202,13 +266,13 @@ $query = "SELECT * FROM coin WHERE date >=".$date_second." AND user ='".$user."'
 $todayResult =mysqli_query($dbc,$query);
 $todayVisit = $todayResult->num_rows;
 if($todayVisit == 0)
-    echo " <a class='btn btn-large btn-primary' target='_blank' href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
+    echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
 else
 {
     $query ="select * from user where name ='".$user."'";
     $result =mysqli_query($dbc,$query);
     $row=mysqli_fetch_array($result);
-    echo " <a class='btn btn-large' target='_blank'  href=\"mission.php\">已签到".$row['checkdays']."天<i class='icon-thumbs-up'></i></a><br /> ";
+    echo " <a class='btn btn-large'   href=\"mission.php\">已签到".$row['checkdays']."天<i class='icon-thumbs-up'></i></a><br /> ";
 
 }
 
@@ -281,8 +345,9 @@ $i = 0;
 while($i<$num_results)
 {
     $row = mysqli_fetch_array($result);
+    $name = getNameBySubject($row['subject']);
     echo "<tr><td>";
-    echo "<big>".strtoupper($row['subject'])."</big> <small>".date("m/d H:i",$row['date'])."</small>";
+    echo "<big>".$name."</big> <small>".date("m/d H:i",$row['date'])."</small>";
     echo "<p> ".$row['content']."</p>";
 
 
@@ -346,6 +411,7 @@ while($i<$num_results)
   <img src="../img/gototop.png">
 </div>
     <script src="js/jquery.min.js"></script>
+    <script src="js/menu.js"></script>
     <script type="text/javascript" src="js/unslider.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/keyEvents.js"></script>
@@ -361,6 +427,8 @@ $('.banner').unslider({
 });
 
 goTopEx();
+
+
 </script>
 
   <!--[if lte IE 6]>

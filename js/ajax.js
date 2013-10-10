@@ -1,7 +1,12 @@
 var pre ="index";
 function loadXML(url,subject)
 {
-  document.getElementById(pre).className="nav-li";
+  var arr = new Array();
+  arr = document.getElementsByName(pre);
+  for(var i=0;i<arr.length;i++){
+    var obj = document.getElementsByName(pre).item(i);
+    obj.className = "nav-li";
+  }
   var xmlhttp;
   var out;
   var x,i;
@@ -29,7 +34,14 @@ function loadXML(url,subject)
         xmlhttp.open("GET",url+"?s="+subject+"&time="+Math.random()*1234,true);
         xmlhttp.send();
         pre =subject;
-        document.getElementById(pre).className="active ";
+
+        var arr = new Array();
+        arr = document.getElementsByName(pre);
+        for(var i=0;i<arr.length;i++){
+          var obj = document.getElementsByName(pre).item(i);
+          obj.className = "active";
+        }
+
 }
 function loadComment(url)
 {

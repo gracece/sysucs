@@ -13,6 +13,12 @@ function get_user_ip() {
 }
 date_default_timezone_set('PRC');
 
+function getNameBySubject($subject)
+{
+    $detail = DB::queryFirstRow("SELECT * FROM setting where subject=%s",$subject);
+    return $detail['name'];
+}
+
 function html_header($title="计科一班")
 {
 ?>
@@ -155,11 +161,11 @@ function writelist($parent,$dbc,$showUser =false){
         <tr>
         <th style="width:30px;text-align:center;">#</th>
         <th style="width:420px;">名称</th>
-        <th style="width:70px;">文件大小</th>';
+        <th style="width:70px;" class="hidden-phone">文件大小</th>';
     if($showUser == true) echo ' <th style="width:70px;">上传者</th>';
-    echo' <th style="width:70px;">上传时间</th>
-        <th style="width:30px;">热度</th>';
-if($showUser == true) echo ' <th style="width:30px;">评论</th>';
+    echo' <th style="width:70px;" class="hidden-phone">上传时间</th>
+        <th style="width:30px;" class="hidden-phone">热度</th>';
+if($showUser == true) echo ' <th style="width:30px;" class="hidden-phone" >评论</th>';
         echo'
         </tr>
         </thead>
@@ -180,16 +186,16 @@ if($showUser == true) echo ' <th style="width:30px;">评论</th>';
                     <td>
                     <a href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
                     </td>
-                    <td>".$size."MB</td>";
+                    <td class='hidden-phone'>".$size."MB</td>";
 
                 if($showUser == true)
                     echo" <td>".$row['user']."</td>";
 
                 echo"
-                    <td>".date("Y/m/d",$row['date'])."</td>
-                    <td>".$row['downloadtimes']."</td>";
+                    <td class='hidden-phone'>".date("Y/m/d",$row['date'])."</td>
+                    <td class='hidden-phone'>".$row['downloadtimes']."</td>";
                 if($showUser == true) echo "
-                    <td> <a href=\"#fileinfo\" onclick='loadComment(\"fileinfo.php?subject=".$parent."&file=".$row['date']."\")' role=\"button\" data-toggle=\"modal\">".$commentNum."</a> </td>";
+                    <td class='hidden-phone' > <a href=\"#fileinfo\" onclick='loadComment(\"fileinfo.php?subject=".$parent."&file=".$row['date']."\")' role=\"button\" data-toggle=\"modal\">".$commentNum."</a> </td>";
                 echo " </tr> ";
                 $index++;
           //  }

@@ -3,6 +3,7 @@ require_once('../functions.php');
 require_once('../auth_head.php');
 html_header("计科一班--消息");
 $to =safeGet('to');
+
 ?>
 <div style="padding: 0px 0px 50px; margin: 0px; border-width: 0px; height: 0px; display: block;" id="yass_top_edge_padding"></div>
   <div class="navbar  navbar-fixed-top">

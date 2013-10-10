@@ -10,11 +10,7 @@ $to =$toUser;
 $content = safePost('content');
 $from = $_SESSION['user'];
 $user =$from;
-if($toUser ==$user)
-{
-    echo "发给自己是要干毛啊！当记事本吗？";
-    exit;
-}
+
 if($toUser =='system' || $toUser=='@提醒')
 {
     echo "无法向system/@提醒发送消息，如果有bug反馈，请直接联系grace";

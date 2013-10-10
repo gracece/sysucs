@@ -139,13 +139,17 @@ else
 
 $chartNum =array(0,0,0,0,0,0,0,0);
 $sum =0;
-for($i=0;$i<$n;$i++)
+
+
+$checkResult = DB::query("SELECT coin.user,coin.date,coin.num,user.checkdays
+    FROM coin,user WHERE user.name=coin.user
+    And coin.date >=%s And coin.type ='签到' ORDER BY coin.date DESC",$date_second);
+foreach($checkResult as $row)
 {
-    $row =mysqli_fetch_array($checkedUser);
     $t = $row['date'];
     $micro = sprintf("%06d",($t - floor($t)) * 1000000);
     $d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-    echo "<tr><td>".$d->format("H:i:s.u")."</td><td>".$row['user']."</td><td><b> <code>".$row['num']."</code></b></td></tr>";
+    echo "<tr><td>".$d->format("H:i:s.u")."</td><td>".$row['user']."</td><td><b> <code>".$row['num']."</code></b></td><td>连续签到".$row['checkdays']."天</td></tr>";
     $number = (int)$row['num'];
     if($number != 15)
     {

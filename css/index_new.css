@@ -3,18 +3,36 @@ body {
   padding-bottom: 40px;
   font-family:"Microsoft Yahei";
 }
+.target-fix
+{
+  position:relative;
+  top:-60px;
+  display:block;
+  height:0;
+  overflow:hidden;
+}
 .sidebar-nav {
   padding: 4px 0;
 }
 .nav-li{
   background:white;
 }
-.icon-chevron-right
+.sub-dev{
+  margin-top:8px;
+  display:none;
+}
+.sub-dev>li{
+  margin-left:15px;
+}
+.icon-chevron-right ,.icon-chevron-down
 {
   float: right;
-  margin-top: 12px;
   margin-right: 6px;
   opacity: .25;
+  margin-top:8px;
+}
+.icon-margintop{
+  margin-top: 12px;
 }
 #gotopbtn{   
   position:fixed;

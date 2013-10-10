@@ -173,8 +173,10 @@ if($_SESSION['admin'] ==1)
     </div>
 
                   </div> </div>
-<input id="content" type="hidden" name="content" />
-                <button type="submit" class="btn">Add</button>
+            <input id="content" type="hidden" name="content" />
+            <label class="checkbox">
+            <input  name="toWeibo" type="checkbox" checked="checked" />同步到@中大11级计科一班 </label>
+                <button type="submit" class="btn btn-primary btn-large ">Add</button>
           </form>
 
 

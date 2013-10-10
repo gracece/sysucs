@@ -50,8 +50,18 @@ margin-bottom:0px !important;
           <div class="nav-collapse collapse">
             <ul class="nav">
 <li> <a href="./">Home</a> </li>
-<li> <a href="wadmin.php" >文件管理</a> </li>
+<?php
+if($_SESSION['admin'] ==1)
+{
+    echo '
+    <li> <a href="wadmin.php" >文件管理</a> </li>
 <li> <a href="viewUsers.php">用户管理</a> </li>
+<li> <a href="setting.php"> 网站设置</a> </li>
+';
+}
+
+?>
+
 <li> <a href="viewip.php" >访问统计</a> </li>
 <li> <a href="todayCoin.php" >今日金币</a> </li>
 <li class="active"> <a href="viewdown.php" >下载统计</a> </li>
