@@ -50,7 +50,7 @@ if(isset($_POST['toWeibo']) && $_POST['toWeibo']=="on")
 {
 require_once('libweibo/config.php');
 require_once('libweibo/saetv2.ex.class.php');
-$c = new SaeTClientV2( WB_AKEY , WB_SKEY ,"2.00OPiozCc2ZfuD30662dfa70RHzHND" );
+$c = new SaeTClientV2( WB_AKEY , WB_SKEY ,CS_weibo_token);
 
 
     $content=trim($_POST['content']);

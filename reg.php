@@ -1,5 +1,4 @@
 <?php
-define("CODE","helloworld");
 require("header.html");
 require("./functions.php");
 $allow_to_reg = true;
