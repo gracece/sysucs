@@ -90,7 +90,7 @@ echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class=
 <ul class="nav nav-pills nav-stacked">
              <?php
 $sub_index=1;
-$query = "select * from setting where `show`=1 AND (major=4 OR major =7) order by CONVERT(name USING GBK)";
+$query = "select * from setting where `show`=1 AND major&4=4  order by CONVERT(name USING GBK)";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {
@@ -112,7 +112,7 @@ while($row = mysqli_fetch_array($result))
 <div class="sub-dev" id="sub_2"> 
 <ul class="nav nav-pills nav-stacked">
              <?php
-$query = "select * from setting where `show`=1 AND (major=2 OR major =7) order by CONVERT(name USING GBK)";
+$query = "select * from setting where `show`=1 AND major&2=2  order by CONVERT(name USING GBK)";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {
@@ -132,7 +132,7 @@ while($row = mysqli_fetch_array($result))
 <div class="sub-dev" id="sub_3" > 
 <ul class="nav nav-pills nav-stacked">
              <?php
-$query = "select * from setting where `show`=1 AND (major=1 OR major=7) order by CONVERT(name USING GBK)";
+$query = "select * from setting where `show`=1 AND major&1=1 order by CONVERT(name USING GBK)";
 $result = mysqli_query($dbc,$query);
 while($row = mysqli_fetch_array($result))
 {

@@ -11,21 +11,15 @@ $nowip =get_user_ip();
 <div class="alert alert-info">
 <h4>
 <?php
-if(isset($_POST['old']))
+$type = safeGet('type');
+$dbc =newDbc();
+
+if($type == 1)
 {
-    //  $newuser = $_POST['name'];
     $email = safePost('email');
-    $old = safePost('old');
     $signature = safePost('signature');
     $signature = substr($signature,0,180);
-    $new1 = safePost('new1');
-    $new2 = safePost('new2');
     $nickname =safePost('nickname');
-
-    
-    
-
-    $dbc =newDbc();
     $nicknameOK =true;
     $query ="select nickname from user where name='".$user."'";
     $rrrrr=mysqli_query($dbc,$query);
@@ -51,19 +45,28 @@ if(isset($_POST['old']))
     }
 
     if($nickname =='')
-            $nicknameOK =false;
+        $nicknameOK =false;
 
     if(!$nicknameOK)
     {
         $nickname =$user;
     }
 
-    $query = "update user set signature ='".$signature."',nickname='".$nickname."' where name ='".$user."'";
+    $query = "update user set signature ='".$signature."',nickname='".$nickname."',email='".$email."' where name ='".$user."'";
     $result = mysqli_query($dbc,$query);
     if($result)
-        echo "签名更改成功！";
+        echo "资料更改成功！";
     else 
-        echo "签名更改失败！";
+        echo "资料更改失败！";
+
+}
+
+if($type==2)
+{
+    $old = safePost('old');
+    $new1 = safePost('new1');
+    $new2 = safePost('new2');
+
 
     if($old != null )
     {
@@ -77,33 +80,18 @@ if(isset($_POST['old']))
         $row = mysqli_fetch_array($result);
         if($row['password'] == sha1($old))
         {
-            //匹配172.18字段ip
-            /*
-            $pattern ='/^172.18(\.((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)){2}$/';
-            if(!preg_match($pattern,$ip,$match))
-            {
-                echo "ip格式错误！！";
-                exit;
-            }
-             */
-
-            if($new1 =='')
-                $query = "update user set email ='".$email."' where name ='".$user."'";
-            else
-                $query = "update user set password = '".sha1($new1)."' , ip ='".$ip."' where name ='".$user."'";
+            $query = "update user set password = '".sha1($new1)."' where name ='".$user."'";
             $result = mysqli_query($dbc,$query);
             if($result)
-                echo "更改成功！";
+                echo "密码更改成功！";
             else
-                echo  "更改失败!";
+                echo  "密码更改失败!";
         }
         else
         {
             echo "原密码错误";
             exit;
         }
-
-
     }
 
 }

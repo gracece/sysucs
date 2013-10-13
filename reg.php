@@ -69,7 +69,7 @@ if($allow_to_reg && isset($_POST['reg']) )
         $sub = mysqli_query($dbc,$query);
         if($sub)
         {
-            addMessage("grace","新用户 ".$name);
+            addMessage("grace","新用户 ".$name." ".$schoolnumber." ".$ip." ".$email);
             echo "ok!";
             echo"
                 <a href='/'>马上登录看看</a>

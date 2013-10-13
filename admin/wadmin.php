@@ -70,11 +70,10 @@ function reloadPage(){
 
           <div class="container" style="width:970px">
             <div class="tabbable tabs-left">
-              <ul class="nav nav-tabs" id="mainmenu">
-                <li class="active"><a href="#1" data-toggle="tab">首页</a></li>
+              <ul class="nav nav-tabs" id="mainmenu" style="margin-right:0px">
 <?php
 $dbc = newDbc();
-$query = "select * from setting";
+$query = "select * from setting where `show`=1";
 $result = mysqli_query($dbc,$query) or die ("query failed!");
 $temp= array();
 $i = 2;
@@ -82,25 +81,22 @@ while($row= mysqli_fetch_array($result))
 {
   $temp[$i][0]= $row['subject'];
   $temp[$i][1]= $row['name'];
-  echo '<li><a href="#'.$i.'" data-toggle="tab">'.$row['name'].'</a></li> ';
+  if(safeGet('subject') == $row['subject'])
+  echo '<li class="active"><a  href="?name='.$row['name'].'&subject='.$row['subject'].'" >'.$row['name'].'</a></li> ';
+  else
+  echo '<li><a href="?name='.$row['name'].'&subject='.$row['subject'].'" >'.$row['name'].'</a></li> ';
   $i++;
 }
 ?>
               </ul>
-              <div class="span10 tab-content pull-right">
-                <div class="tab-pane active" id="1"> <h2>前方有怪兽！</h2> </div>
+              <div class="span10  pull-right">
 
 <?php
-$j = 2;
-while ($j <=$i)
-{
-  echo ' <div class="tab-pane" id="'.$j.'"><h3>';
-  echo $temp[$j][1];
+  echo ' <div class="tab-pane" ><h3>';
+  echo safeGet('name');
   echo '</h3> <hr /> ';
-  ListFiles($temp[$j][0]);
-  $j++;
+  ListFiles(safeGet('subject'));
   echo "</div> ";
-}
 
 ?>
  </div>

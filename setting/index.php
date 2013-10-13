@@ -39,7 +39,7 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
 <div class="row">
   <div class="span6">
     <h4><?php echo $user ?>资料更改</h4> 
-    <form action="change.php" method="post" class="form-horizontal">
+    <form action="change.php?type=1" method="post" class="form-horizontal">
 
   <div class="control-group">
         <label class="control-label" >登录名</label>
@@ -48,6 +48,15 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
              <!-- 改这里的disabled是没有用的== --!>
         </div>
   </div>
+
+ <div class="control-group">
+        <label class="control-label" >Email</label>
+        <div class="controls">
+            <input id="ip" name="email" type="text" value="<?php echo $row['email']; ?>" />
+        </div>
+      </div>
+
+
 
 <div class="control-group">
         <label class="control-label" >昵称</label>
@@ -64,15 +73,16 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
         </div>
       </div>
 
-      <div class="control-group">
-        <label class="control-label" >Email</label>
+ <div class="control-group">
         <div class="controls">
-            <input id="ip" name="email" type="text" value="<?php echo $row['email']; ?>" />
+      <input class ="btn btn-primary" type="submit" value="更改" />
         </div>
       </div>
 
 
-
+    </form>
+     
+ <form action="change.php?type=2" method="post" class="form-horizontal">
 <div class="control-group">
         <label class="control-label" >当前密码</label>
         <div class="controls">
@@ -93,19 +103,14 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
       </div>
     <div class="control-group">
         <div class="controls">
-      <input class ="btn btn-primary" type="submit" value="submit" />
-      <p class="help-block">如果不需要更改密码，则新密码留空即可</p>
-      <p class="help-block">如果email也不需要更改，则当前密码也可以留空</p>
+      <input class ="btn btn-primary" type="submit" value="更改" />
         </div>
       </div>
 
 
 
-
-
-
-
     </form>
+
   </div>
   <div class="span5">
     <h4>计科币转让</h4>
@@ -143,7 +148,7 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
  <div class="control-group">
           <label class="control-label" ></label>
           <div class="controls">
-      <input class="btn btn-primary" type="submit" value="submit" />
+      <input class="btn btn-primary" type="submit" value="提交" />
       <p class="help-block">金钱交易有风险，请注意识别!</p>
           </div>
         </div>

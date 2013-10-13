@@ -109,6 +109,15 @@ function sendform()
 <input name='descr' type='text' style="text-align:center" />
 <a href="#" class='btn btn-primary' onclick ="sendform()">执行</a>
 </form>
+
+<form  class="well" method="post" action="./userContral.php">
+ <input name='userId' type="hidden" style='text-align:center' <?php if($isSet)echo"value='".$user."'";?> />
+<input name="reset" value="true" type="hidden" />
+<p>操作密码</p>
+<input  name="admin-code" type="text" />
+<input type="submit" class="btn btn-danger" value="重置密码" />
+
+</form>
 <div><!-- end right span-->
 </div><!-- end row -->
 </div><!-- container -->

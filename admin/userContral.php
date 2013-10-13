@@ -10,6 +10,21 @@ require_once('../functions.php');
 date_default_timezone_set("PRC");
 
 $user = $_POST['userId'];
+if(isset($_POST['reset']) && $_POST)
+{
+    if(safePost('admin-code') == "sure")
+    {
+        $newPassword = md5(time()."sysucscs");
+        DB::update('user',array(
+            'password'=>sha1($newPassword)
+        ), 'name=%s',$user);
+        echo $newPassword;
+    }
+    else
+        echo "wrong!";
+    exit;
+
+}
 $num = $_POST['coin'];
 if($_POST['upOrDown'] == 'dec'){
     $num = -$num;
@@ -26,5 +41,4 @@ else
 
 echo "貌似可以了";
 ?>
-
 
