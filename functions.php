@@ -27,11 +27,16 @@ function html_header($title="计科一班")
   <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title><?php echo $title ?></title>
     <meta name="description" content="中山大学2011级计科一班">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" media="screen" />   
 <script type="text/javascript" src="../../js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js?version=2.3.1"></script>
 <script type="text/javascript" src="../../js/ajax.js"></script>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
-<link href="../../css/style.css" rel="stylesheet" type="text/css" media="screen" />   
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0a37f369f66ef3c1841dcc3320ec316a' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
 
 </head>
 
@@ -53,7 +58,7 @@ function setSession($user)
 function safePost($str)
 {
     $val = !empty($_POST["$str"]) ? $_POST["$str"]:null;
-   // $val = strip_tags($val);
+    // $val = strip_tags($val);
     // 这个好像太严格了
     // $val =htmlentities($val);
     $val = htmlentities($val,ENT_QUOTES,"UTF-8");
@@ -132,9 +137,9 @@ function show5info()
     {
         $row = mysqli_fetch_array($result);
         $i++;
-        echo "<tr><td><p>".date("Y-m-d H:i 星期",$row['date']).trans($row['date'])."</p>"
-                .nl2br($row['content']).
-                "</td></tr>";
+        echo "<tr><td><p><b>".$row['ip']." </b>  ".date("Y-m-d H:i 星期",$row['date']).trans($row['date'])."</p>"
+            .nl2br($row['content']).
+            "</td></tr>";
     }
     echo " </tbody> </table> ";
     echo ' <a href="search.php?all=true&q=+" class="btn">查看全部通知</a> ';
@@ -165,8 +170,8 @@ function writelist($parent,$dbc,$showUser =false){
     if($showUser == true) echo ' <th style="width:70px;">上传者</th>';
     echo' <th style="width:70px;" class="hidden-phone">上传时间</th>
         <th style="width:30px;" class="hidden-phone">热度</th>';
-if($showUser == true) echo ' <th style="width:30px;" class="hidden-phone" >评论</th>';
-        echo'
+    if($showUser == true) echo ' <th style="width:30px;" class="hidden-phone" >评论</th>';
+    echo'
         </tr>
         </thead>
         <tbody>
@@ -174,32 +179,32 @@ if($showUser == true) echo ' <th style="width:30px;" class="hidden-phone" >评�
     if($r = mysqli_query($dbc,$query)){  
         $index = 1;  
         while($row = mysqli_fetch_array($r)){
-          //  if(is_file($root.'/upload/'.$parent.'/'.$row['name']))
-          //  {
-                $size = filesize($root.'/upload/'.$parent.'/'.$row['name'])/1024/1024;
-                $size = number_format($size,2);
-                //两位小数
-                $description = $row['description'];
-                $commentNum =$row['comment'];
-                echo "<tr>
-                    <td style='text-align:center;'>".$index."</td>
-                    <td>
-                    <a href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
-                    </td>
-                    <td class='hidden-phone'>".$size."MB</td>";
+            //  if(is_file($root.'/upload/'.$parent.'/'.$row['name']))
+            //  {
+            $size = filesize($root.'/upload/'.$parent.'/'.$row['name'])/1024/1024;
+            $size = number_format($size,2);
+            //两位小数
+            $description = $row['description'];
+            $commentNum =$row['comment'];
+            echo "<tr>
+                <td style='text-align:center;'>".$index."</td>
+                <td>
+                <a href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
+                </td>
+                <td class='hidden-phone'>".$size."MB</td>";
 
-                if($showUser == true)
-                    echo" <td>".$row['user']."</td>";
+            if($showUser == true)
+                echo" <td>".$row['user']."</td>";
 
-                echo"
-                    <td class='hidden-phone'>".date("Y/m/d",$row['date'])."</td>
-                    <td class='hidden-phone'>".$row['downloadtimes']."</td>";
-                if($showUser == true) echo "
-                    <td class='hidden-phone' > <a href=\"#fileinfo\" onclick='loadComment(\"fileinfo.php?subject=".$parent."&file=".$row['date']."\")' role=\"button\" data-toggle=\"modal\">".$commentNum."</a> </td>";
-                echo " </tr> ";
-                $index++;
-          //  }
-           // else
+            echo"
+                <td class='hidden-phone'>".date("Y/m/d",$row['date'])."</td>
+                <td class='hidden-phone'>".$row['downloadtimes']."</td>";
+            if($showUser == true) echo "
+                <td class='hidden-phone' > <a href=\"#fileinfo\" onclick='loadComment(\"fileinfo.php?subject=".$parent."&file=".$row['date']."\")' role=\"button\" data-toggle=\"modal\">".$commentNum."</a> </td>";
+            echo " </tr> ";
+            $index++;
+            //  }
+            // else
             //    echo $row['name']."not a file";
 
 
@@ -211,5 +216,20 @@ if($showUser == true) echo ' <th style="width:30px;" class="hidden-phone" >评�
 }
 
 
+function showMissionBtn($user)
+{
+
+    $today = date("Y/m/d");
+    $date_second = strtotime($today);
+    //显示签到按钮
+    $count = DB::queryFirstField("SELECT COUNT(*) FROM coin WHERE date>=%i AND user=%s AND type='签到'",$date_second,$user);
+    if($count== 0)
+        echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
+    else
+    {
+        $checkdays = DB::queryFirstField("SELECT checkdays FROM user WHERE name=%s",$user);
+        echo " <a class='btn btn-large'   href=\"mission.php\">已签到".$checkdays."天<i class='icon-thumbs-up'></i></a><br /> ";
+    }
+}
 
 ?>

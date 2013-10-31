@@ -1,16 +1,10 @@
 <?php
-session_start();
+require("functions.php");
+require_once('auth_head.php');
+require("header.html");
 $user = $_SESSION['user'];
 @$right =$_SESSION['right'];
-require("functions.php");
-require("header.html");
 ?>
-<div class="container">
-<br />
-<br />
-<br />
-
-<div class="alert alert-info">
 <?php
 $ip =get_user_ip();
 if(isset($_GET['subject']) && isset($_GET['file']))
@@ -23,6 +17,14 @@ if(isset($_GET['subject']) && isset($_GET['file']))
 
     if($result==false ||$result->num_rows == 0)
     {
+?>
+    <div class="container">
+    <br />
+    <br />
+    <br />
+    <div class="alert alert-info">
+<?php
+
         echo "没有这个文件,或者该文件已经被管理员删除,或移动到其他科目！";
         exit;
     }
@@ -33,7 +35,6 @@ if(isset($_GET['subject']) && isset($_GET['file']))
         $fileTodown =$row['name'];
         $uploader =$row['user'];
         $download_times = $row['downloadtimes'];
-        echo "downloading ".$fileTodown;
 
         if($right == 1)
         {
@@ -42,7 +43,6 @@ if(isset($_GET['subject']) && isset($_GET['file']))
             $download_times = $down->num_rows;
             if($download_times > 1)
             {
-                echo "已经下载过".$fileTodown.",无需金币";
                 $type ="[再次]下载".$fileTodown;
                 $num =0;
                 coinChange($user,$num,$type);
@@ -53,9 +53,16 @@ if(isset($_GET['subject']) && isset($_GET['file']))
                 $query = "select * from user where name ='".$user."'";
                 $result =mysqli_query($dbc,$query);
                 $row =mysqli_fetch_array($result);
-                echo "当期余额".$row['coin'];
                 if($row['coin'] <=0)
                 {
+?>
+                    <div class="container">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="alert alert-info">
+<?php
+                    echo "当期余额".$row['coin'];
                     echo "你是有多蛋疼才能把计科币搞到负数啊，面壁去！";
                     exit;
                 }
@@ -63,7 +70,7 @@ if(isset($_GET['subject']) && isset($_GET['file']))
 
                 if($subject =="film")
                     $num =-2;
-                else 
+                else
                     $num =-1;
 
                 $type ="下载".$fileTodown;
@@ -76,10 +83,10 @@ if(isset($_GET['subject']) && isset($_GET['file']))
                     coinChange($uploader,$num,$type);
                     addMessage($uploader,$type);
                 }
-            }     
+            }
         }
 
-      $query="UPDATE resource set downloadtimes =downloadtimes +1  WHERE subject ='".$subject."' and date = '".$file."' ";
+        $query="UPDATE resource set downloadtimes =downloadtimes +1  WHERE subject ='".$subject."' and date = '".$file."' ";
         mysqli_query($dbc,$query) or die  ("update download time failed!");
 
         $time =date("U");
@@ -87,7 +94,20 @@ if(isset($_GET['subject']) && isset($_GET['file']))
         $result = mysqli_query($dbc,$query);
 
 
-        header("Location:upload/".$subject."/".$fileTodown);
+        header("X-Sendfile:upload/".$subject."/".$fileTodown);
+
+        $ext = pathinfo("upload/".$subject."/".$fileTodown,PATHINFO_EXTENSION);
+        if($ext == "pdf")
+        {
+            header("Content-Type:application/pdf");
+            header("Content-Disposition:inline;filename=".$fileTodown);
+        }
+        else
+        {
+            header("Content-Type:application/octet-stream");
+            header("Content-Disposition:attachment;filename=".$fileTodown);
+        }
+
         exit;
     }
 }

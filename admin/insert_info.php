@@ -48,7 +48,7 @@ if($sub){
 
 if(isset($_POST['toWeibo']) && $_POST['toWeibo']=="on")
 {
-require_once('libweibo/config.php');
+require_once('libweibo/config_cs2011.php');
 require_once('libweibo/saetv2.ex.class.php');
 $c = new SaeTClientV2( WB_AKEY , WB_SKEY ,CS_weibo_token);
 
@@ -69,7 +69,7 @@ $c = new SaeTClientV2( WB_AKEY , WB_SKEY ,CS_weibo_token);
         }
 
         echo "<div class='alert alert-info'>";
-        $ret = $c->update($content,23.066345,113.389444);	//发送微博
+        $ret = $c->update($content,23.0686,113.380813);	//发送微博
         echo $content;
         if ( isset($ret['error_code']) && $ret['error_code'] > 0 ) {
             echo "<p>微博发送失败，错误：{$ret['error_code']}:{$ret['error']}</p>";

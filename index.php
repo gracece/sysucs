@@ -58,7 +58,6 @@ echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class=
               <li><a href="setting">个人中心</a></li>
               <li><a href="setting/message.php">消息</a></li>
               <li><a href="setting/rank.php">排行榜</a></li>
-              <li><a href="setting/dandan.php">辉宇蛋蛋店</a></li>
          <?php if ($_SESSION['addInfo'] == 1) echo ' <li><a href="admin">后台管理</a></li>'; ?>
             </ul>
 <form action="search.php"  class="navbar-search">
@@ -74,7 +73,9 @@ echo" <a href='?userout=1' class='navbar-link' ><i style='margin-top:3px' class=
 </div>
 
     <div class="container-fluid">
-    <div class="visible-phone"> <a href="mission.php?t=<?php echo md5(md5(strtotime('today'))."sysucs"); ?>" class="btn btn-primary">签到</a> </div>
+    <div class="visible-phone"> 
+    <?php showMissionBtn($_SESSION['user']); ?>
+</div>
 
       <div class="row-fluid">
         <div class="span1" style="width:3%;min-height:3px"></div>
@@ -262,20 +263,7 @@ if($visitDate - $lastVisitTime >120) //和上次访问相差2分钟才写入数�
 }
 
 //显示签到按钮
-$query = "SELECT * FROM coin WHERE date >=".$date_second." AND user ='".$user."' AND type ='签到' ORDER BY date DESC ";
-$todayResult =mysqli_query($dbc,$query);
-$todayVisit = $todayResult->num_rows;
-if($todayVisit == 0)
-    echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
-else
-{
-    $query ="select * from user where name ='".$user."'";
-    $result =mysqli_query($dbc,$query);
-    $row=mysqli_fetch_array($result);
-    echo " <a class='btn btn-large'   href=\"mission.php\">已签到".$row['checkdays']."天<i class='icon-thumbs-up'></i></a><br /> ";
-
-}
-
+showMissionBtn($_SESSION['user']);
 //time ,23点后显示
 if (date("H") ==23)
 {
@@ -434,6 +422,10 @@ goTopEx();
   <!--[if lte IE 6]>
   <script type="text/javascript" src="js/bootstrap-ie.js"></script>
   <![endif]-->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0a37f369f66ef3c1841dcc3320ec316a' type='text/javascript'%3E%3C/script%3E"));
+</script>
 
   </body>
 </html>

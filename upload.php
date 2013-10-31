@@ -106,14 +106,19 @@ if (in_array($file_end,$allow_type))
         $Filename = $_FILES['file']['name'];
         $date =date("U");
         $description = safePost('description');
-       $query = "INSERT INTO resource values ('".$Filename."',".$date.",'".$description."','".$ip."','0','".$user."','0','".$subject."');";
-        $sub = mysqli_query($dbc,$query);
-        if($sub){
+        $result = DB::insert('resource',array(
+            'name'=>$Filename,
+            'date'=>$date,
+            'description'=>$description,
+            'ip'=>$ip,
+            'user'=>$user,
+            'subject'=>$subject
+        ));
+        if($result){
             echo "加入数据库<br />";
         }else{
             echo "失败";
         }
-        
         if($subject == "film")
         {
             $num = 5;

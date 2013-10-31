@@ -33,8 +33,6 @@ echo "截至".date("m/d H:i") ;
 echo "  总资产<code>".$row['sum(coin)']."</code>  ";
 
 ?></small></h3>
-<div class="alert alert-info">温馨提示,每周日排行第一的同学(周日23:50截止),可凭100个计科币换取鸡蛋一个(何辉宇蛋蛋店赞助==)</div>
-<div class="alert alert-danger">同志们没有特殊需求就不要浪费手续费转账啦，看着都心疼。。</div>
 
 <?php
 $user =$_SESSION['user'];
