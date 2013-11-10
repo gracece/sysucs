@@ -24,7 +24,7 @@ if (isset($_COOKIE['sso']))
         $row = mysqli_fetch_array($result);
         $user = $row['user'];
         setSession($user);
-        header("Location:".$url);
+        header("Location:".urldecode($url));
         exit;
     }
 
@@ -34,14 +34,28 @@ if (isset($_COOKIE['sso']))
 
 if(isset($_SESSION['right'])&&$_SESSION['right']==1)
 {
-   header("Location:".$url);
+        header("Location:".urldecode($url));
     exit;
 }
 
-require("header.html");
 ?>
-    <body style="background:url(./img/login/1.jpg);background-size:100%  ">
-  <div class="container" style="height:100%">
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>中山大学2011级计科一班</title>
+    <meta name="description" content="中山大学2011级计科一班">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
+    <link href="../../css/style.css?v=ddd" rel="stylesheet" type="text/css" media="screen" />   
+<script type="text/javascript">
+  var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+  document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0a37f369f66ef3c1841dcc3320ec316a' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+</head>
+
+    <body style="background:url( '<?php echo bing_pic() ?>' );background-size:cover ">
     <div class="auth_form">
       <form  method="post">
         <h3>SYSUCS.ORG</h3>
@@ -112,7 +126,7 @@ if(isset($_POST['login']))
             setcookie("sso",$sso,time()+30*24*60*60);
         }
         setSession($user);
-        header("Location:".$url);
+        header("Location:".urldecode($url));
         exit;
     }
     else 

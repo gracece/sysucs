@@ -94,19 +94,24 @@ if(isset($_GET['subject']) && isset($_GET['file']))
         $result = mysqli_query($dbc,$query);
 
 
-        header("X-Sendfile:upload/".$subject."/".$fileTodown);
 
         $ext = pathinfo("upload/".$subject."/".$fileTodown,PATHINFO_EXTENSION);
         if($ext == "pdf")
         {
             header("Content-Type:application/pdf");
-            header("Content-Disposition:inline;filename=".$fileTodown);
+            header("Content-Disposition:inline;filename=\"".$fileTodown."\"");
+        }
+        else if($ext=="jpg" or $ext=="png")
+        {
+            header("Content-Type:image");
+            header("Content-Disposition:inline;filename=\"".$fileTodown."\"");
         }
         else
         {
             header("Content-Type:application/octet-stream");
-            header("Content-Disposition:attachment;filename=".$fileTodown);
+            header("Content-Disposition:attachment;filename=\"".$fileTodown."\";");
         }
+        header("X-Sendfile:upload/".$subject."/".$fileTodown);
 
         exit;
     }

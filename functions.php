@@ -28,7 +28,7 @@ function html_header($title="计科一班")
   <title><?php echo $title ?></title>
     <meta name="description" content="中山大学2011级计科一班">
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
-<link href="../../css/style.css" rel="stylesheet" type="text/css" media="screen" />   
+<link href="../../css/style.css?v=gggggggggggg" rel="stylesheet" type="text/css" media="screen" />   
 <script type="text/javascript" src="../../js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js?version=2.3.1"></script>
 <script type="text/javascript" src="../../js/ajax.js"></script>
@@ -224,7 +224,7 @@ function showMissionBtn($user)
     //显示签到按钮
     $count = DB::queryFirstField("SELECT COUNT(*) FROM coin WHERE date>=%i AND user=%s AND type='签到'",$date_second,$user);
     if($count== 0)
-        echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">签到!</a><br /> ";
+        echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">快来签到!</a><br /> ";
     else
     {
         $checkdays = DB::queryFirstField("SELECT checkdays FROM user WHERE name=%s",$user);
@@ -232,4 +232,17 @@ function showMissionBtn($user)
     }
 }
 
+function bing_pic()
+{
+$mkt=array( "en-US", "zh-CN", "ja-JP", "en-AU", "en-UK", "de-DE", "en-NZ", "en-CA");
+$url="http://www.bing.com/HPImageArchive.aspx?format=XML&idx=".mt_rand(0,9)."&n=1&mkt=".$mkt[mt_rand(0,7)];
+$content =file_get_contents($url);
+$p = xml_parser_create();
+xml_parse_into_struct($p,$content,$vals,$index);
+xml_parser_free($p);
+$url='http://www.bing.com'. $vals[5]['value'];
+return $url;
+
+
+}
 ?>

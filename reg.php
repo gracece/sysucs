@@ -1,7 +1,7 @@
 <?php
 require("header.html");
 require("./functions.php");
-$allow_to_reg = true;
+$allow_to_reg = false;
 
 session_start();
 if(isset($_SESSION['preTime']))
@@ -98,6 +98,7 @@ else
 <form method="post">
 <input name="reg" value="1" type="hidden" />
 <p>用户名</p>
+<div class='alert alert-info'>请使用有意义的用户名 </div>
 <input id="name" name="name" type="text" />
 <p>Email</p>
 <input  name="email" type="email" />

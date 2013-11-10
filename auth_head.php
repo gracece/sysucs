@@ -12,14 +12,16 @@ if($logout ==1)
     }
     setcookie("sso", "", time()-3600);
     $_SESSION['right']=0;
+    header("Location:/login.php");
+    exit;
 
 }
 
-$url=$_SERVER['PHP_SELF'];
+$url=urlencode($_SERVER['REQUEST_URI']);
 
 if(@$_SESSION['right']!=1)
 {
-    header("Location:../../login.php?url=".$url);
+    header("Location:/login.php?url=".$url);
     exit;
 }
 ?>

@@ -1,5 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
+html{
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
 .fool
 {
     -webkit-transform:rotate(-4deg);
@@ -27,11 +33,11 @@
 
 .auth_form
 {
-  top:30%;
+  position:relative;
+  top:173px;
   box-shadow: 0 0 41px rgba(0, 0, 0, .3),0 4px 0 rgba(255, 255, 255, .8),0 5px 0 rgba(100, 100, 100, 0.4),0 8px 0 rgba(255, 255, 255, .4),inset 0 0 5px rgba(255, 255, 255, .1);
   border-radius:5px;
-  margin-top:20%;
-  margin-left:335px;
+  margin:0 auto;
   padding:10px 20px 20px 20px;
   background:#fff;
   font-size:16px;
