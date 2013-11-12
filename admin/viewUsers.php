@@ -46,6 +46,7 @@ $result = mysqli_query($dbc,$query);
 
 <div class="container">
 
+<a href="./invite_code.php" class="btn pull-right">邀请码管理</a>
 <h2>
 <?php 
 if($user == 'ALL_USERS_LIST')

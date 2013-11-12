@@ -16,8 +16,6 @@ if(mysqli_connect_error()){
 }
 date_default_timezone_set('PRC');
 $deleteInfo = $_POST['deleteInfo'];
-$deleteContent = $_POST['deleteContent'];
-echo "<div class='well'><h2>deleting</h2><div class='alert alert-info'> ".$deleteContent." </div>";
 $query = "DELETE FROM info WHERE date = '".$deleteInfo."'";
 if(mysqli_query($dbc,$query)) echo "已从数据库删除";
 

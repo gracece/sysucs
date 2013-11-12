@@ -1,7 +1,7 @@
 <?php
 require("header.html");
 require("./functions.php");
-$allow_to_reg = false;
+$allow_to_reg = true;
 
 session_start();
 if(isset($_SESSION['preTime']))
@@ -32,10 +32,15 @@ if($allow_to_reg && isset($_POST['reg']) )
         echo "两次输入密码不一致！";
     else if($pass1 =='')
         echo "空密码是什么心态！";
-    else if($code !=CODE)
-        echo "邀请码错误";
     else
     {
+        DB::query("SELECT * FROM invite_code WHERE code=%s AND valid=1",$code);
+        $counter = DB::count();
+        if($counter == 0)
+        {
+            echo "邀请码无效，请重试！";
+            exit;
+        }
         $dbc =newDbc();
         $query = "SELECT count(*) FROM user where name ='".$name."'";
         $result = mysqli_query($dbc,$query);
@@ -70,6 +75,12 @@ if($allow_to_reg && isset($_POST['reg']) )
           $query = "INSERT INTO user (name,nickname,number,password,ip,email,coin,checkdays) values ('".$name."','".$name."','".$schoolnumber."','".sha1($pass1)."','".$ip."','".$email."','100','0')";
 
         $sub = mysqli_query($dbc,$query);
+        DB::update("invite_code",array(
+            'valid'=>0,
+            'user'=>$name,
+            'time'=>time()
+        ),"code=%s",$code);
+
         if($sub)
         {
             addMessage("grace","新用户 ".$name." ".$schoolnumber." ".$ip." ".$email);
@@ -78,7 +89,7 @@ if($allow_to_reg && isset($_POST['reg']) )
                 <a href='/'>马上登录看看</a>
                 ";
         }
-        else 
+        else
             echo "failed!";
     }
     exit;
@@ -108,10 +119,10 @@ else
 <input id="pass1" name="pass1" type="password" />
 <p>确认密码</p>
 <input id="pass2" name="pass2" type="password" />
-<p>**码</p>
-<input name="code"  type="text" />
+<p>邀请码</p>
+<input name="code"  type="text" value='<?php echo safeGet('code')?>'/>
 <br />
-<input type="submit" value="submit" class="btn btn-primary" />
+<input type="submit" value="submit" class="btn btn-primary" /'>
 <br />
 
 </form>

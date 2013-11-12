@@ -231,7 +231,6 @@ $query = "SELECT * FROM info ORDER BY date DESC;";
                   <td>
                   <form style='margin:0 0 0; ' onsubmit='return checkForm()' target='_blank' action='delete-info.php' method='post'>
                   <input name='deleteInfo' type='hidden' value='".$row['date']."' />
-                  <input name='deleteContent' type='hidden' value='".$row['content']."' />
                   <input type='submit'class='btn btn-danger' value='delete' />
                   </form>
                   </td> ";

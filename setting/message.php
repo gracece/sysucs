@@ -27,7 +27,7 @@ $to =safeGet('to');
 <div class="container">
 <form id='send' >
 <p>用户名</p>
-<input  name="toUser" type="text" value=<?php echo $to ?> />
+<input  name="toUser" type="text" value='<?php echo  $to!=null? $to:$_SESSION['user'] ?>' />
 <p>内容</p>
 <textarea  name="content" id="con" rows="3" style="width:70%"></textarea>
 <br />
@@ -115,7 +115,7 @@ else
 ";
 $result = mysqli_query($dbc,$query);
     $num =$result->num_rows;
-
+echo '<a href="?to=system" class="btn">直接查看系统消息</a>';
     echo "<h3>总共".$num."个会话";
     echo " <small class='muted'>时间排序有点问题，将就着看吧</small> ";
     echo "<a class='btn btn-large pull-right' id='all' href='#' onclick=\"readMessage('all')\">标记所有</a></h3>";
