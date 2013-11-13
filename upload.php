@@ -114,6 +114,7 @@ if (in_array($file_end,$allow_type))
             'user'=>$user,
             'subject'=>$subject
         ));
+        $resource_id = DB::insertId();
         if($result){
             echo "加入数据库<br />";
         }else{
@@ -134,7 +135,7 @@ if (in_array($file_end,$allow_type))
         //处理是否插入通知栏
         if($notInsertToInfo != "on")
         {
-            $content = "<a href=\"download.php?subject=".$parent."&file=".$date."\">".$Filename."</a>";
+            $content = $resource_id;
             $type="资源更新";
             $subject = $parent;
             $query = "INSERT INTO info values ('".$content."','".$type."','".$subject."','".$date."','".$user."')";

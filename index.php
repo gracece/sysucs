@@ -9,7 +9,7 @@ $dbc =newDbc();
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>计科一班-HOME-</title>
+    <title>计科一班-HOME</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="sysucs.org">
     <meta name="author" content="gavin & grace">
@@ -200,7 +200,10 @@ if (time() -$row['date'] < 24*60*60)
         <a class="close" data-dismiss="alert">×</a>';
     if ($row['type'] == "资源更新")
     {
-        echo getNameBySubject($row['subject'])." 新资源！by ".$row['ip'].' '.$row['content'];
+        $id = $row['content'];
+        $resource = getResource($id);
+        echo getNameBySubject($resource['subject'])." 新资源！by ".$resource['user'] ;
+        showFileinfo($id);
     }
     else
         echo nl2br($row['content']);
@@ -333,13 +336,13 @@ $i = 0;
 while($i<$num_results)
 {
     $row = mysqli_fetch_array($result);
-    $name = getNameBySubject($row['subject']);
+    $id = $row['content'];
+    $resource = getResource($id);
+    $name =  getNameBySubject($resource['subject']);
     echo "<tr><td>";
-    echo "<big>".$name."</big> <small>".date("m/d H:i",$row['date'])."</small>";
-    echo "<p> ".$row['content']."</p>";
-
-
-    echo "</td></tr>";
+    echo $name."<small>".date("m/d H:i",$row['date'])."</small><p>";
+    showFileinfo($id);
+    echo "</p></td></tr>";
     $i++;
 }
 ?> 
