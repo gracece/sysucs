@@ -38,6 +38,7 @@ else
         </div>
     <div class="modal-body" style="max-height:470px;">
     <h4>上传者:'.$uploader.'</h4>
+    <h4>下载次数:'.$downloadTimes.'</h4>
     <h4>资源描述</h4>
         ';
     if($description =='')

@@ -35,7 +35,7 @@ echo '<div class="well"><h1>';
 if($subject =="film")
     $allow_type =array("rar","zip","7z","avi","mp4","mp3","hlv","mov","asf","wmv","3gp","mkv","f4v","flv","rmvb","rm","webm");
 else
-    $allow_type=array("apk","asm","epub","img","iso","xls","xlsx","cpp","pdf","gif","mp3","mp4","zip","rar","doc","docx","mov","ppt","pptx","txt","7z","jpeg","jpg","JPEG","png");
+    $allow_type=array("apk","asm","epub","img","iso","xls","xlsx","cpp","pdf","gif","mp3","mp4","zip","rar","doc","docx","mov","ppt","pptx","txt","7z","jpeg","jpg","JPEG","png","exe");
 //允许的文件类型
 $torrent = explode(".",$_FILES["file"]["name"]);
 $file_end = end($torrent);
