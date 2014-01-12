@@ -25,6 +25,11 @@ if($type == 1)
     $rrrrr=mysqli_query($dbc,$query);
     $row =mysqli_fetch_array($rrrrr);
     $nowNickname=$row[0];
+    if ($_POST['csrf'] != md5($_SESSION['CSRF']))
+    {
+        echo ' <script>   alert("CSRF! ")  </script> ';
+        exit;
+    }
 
     if (strtolower($nickname) != strtolower($user)&& strtolower($nickname)!= strtolower($nowNickname))
     {

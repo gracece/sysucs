@@ -75,6 +75,8 @@ while($row =mysqli_fetch_array($result))
     <td><form style="margin:0 0 0" method="post" class="form-inline" action="action.php?type=change">
     <input name="subject" type="hidden" value='<?php echo $row['subject'] ?>' />
 <input  name="name" type="text" class="input" value='<?php echo $row['name'] ?>'/>
+<input  name="name" type="text" class="input input-small" value='<?php echo $row['show'] ?>'/>
+<input  name="name" type="text" class="input input-small" value='<?php echo $row['major'] ?>'/>
 <input  name="remark" type="text" class="input-xxlarge" value='<?php echo $row['remark'] ?>'/>
 <input type="submit" class='btn btn-primary' value="更改" />
 </form>
@@ -95,6 +97,8 @@ while($row =mysqli_fetch_array($result))
 <input  name="subject" type="text" />
 <p>中文名称</p>
 <input  name="name" type="text" />
+<p>Major</p>
+<input  name="major" type="text" />
 <p>备注</p>
 <textarea  name="remark" rows="5" cols="50">none</textarea>
 <br />

@@ -57,7 +57,7 @@ foreach ($result as $row) {
             <td> <a href='/reg.php?code={$row['code']}' > {$row['code']} </a> </td>
             <td>{$row['valid']}</td>
             <td>{$row['user']}</td>
-            <td>{$row['time']}</td>
+            <td>".date("Y-m-d H:i:s",$row['time'])."</td>
         </tr>
         ";
 }

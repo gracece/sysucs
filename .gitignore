@@ -2,4 +2,8 @@ config.php
 *.swp
 upload/
 phpmyadmin/
-
+lab/
+tz.php
+ua.php
+test.php
+test/

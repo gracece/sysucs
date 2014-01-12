@@ -1,5 +1,4 @@
 <?php
-
 require("functions.php");
 require("auth_head.php");
 html_header("计科一班--签到");
@@ -16,7 +15,6 @@ html_header("计科一班--签到");
               <li><a href="setting/message.php">消息</a></li>
               <li><a href="setting/rank.php">排行榜</a></li>
               <li class="active"><a href="#">签到</a></li>
-              <li><a href="setting/dandan.php">辉宇蛋蛋店</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -127,7 +125,9 @@ if($todaycheck == 0)
 
 }
 else
-    echo "今日已经签到,查看<a href='setting/rank.php'>计科币排行榜</a>";
+    echo "今日已经签到,查看<a href='setting/rank.php'>计科币排行榜</a>。  
+    <a href='/random.php' style='color:red'>签到太少？来试试手气！</a>
+    ";
 ?>
 </div>
 <div class="row">
@@ -149,7 +149,7 @@ foreach($checkResult as $row)
     $t = $row['date'];
     $micro = sprintf("%06d",($t - floor($t)) * 1000000);
     $d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-    echo "<tr><td>".$d->format("H:i:s.u")."</td><td>".$row['user']."</td><td><b> <code>".$row['num']."</code></b></td><td>连续签到".$row['checkdays']."天</td></tr>";
+    echo "<tr><td>".$d->format("H:i:s.u")."</td><td title='".$row['user']."'>".getNickname($row['user'])."</td><td><b> <code>".$row['num']."</code></b></td><td>连续签到".$row['checkdays']."天</td></tr>";
     $number = (int)$row['num'];
     if($number != 15)
     {
@@ -252,8 +252,3 @@ new Chart(ctx2).Line(data2,options2);
 
 </div>
 </div>
-<?php 
-
-echo @$_SERVER['HTTP_REFERER'];
-
-

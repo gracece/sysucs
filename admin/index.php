@@ -53,7 +53,7 @@ div[data-role="editor-toolbar"] {
 </head>
 
 
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
      <script type="text/javascript">
        function reloadPage(){
            window.location.reload();
@@ -239,10 +239,10 @@ $query = "SELECT * FROM info ORDER BY date DESC;";
 ?>
     </div>
 
-<script src="//cdnjs.bootcss.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../js/jquery.min.js"></script>
 <script src="../js/jquery.hotkeys.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js"></script>
-<script type="text/javascript" src="http://www.bootcss.com/p/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
+<script type="text/javascript" src="../js/bootstrap-wysiwyg.js"></script>
 <script type="text/javascript">
   $(function(){
     function initToolbarBootstrapBindings() {

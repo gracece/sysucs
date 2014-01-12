@@ -41,10 +41,13 @@ function html_header($title="计科一班")
   <title><?php echo $title ?></title>
     <meta name="description" content="中山大学2011级计科一班">
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
+<link rel="stylesheet" href="/css/tiger.css" media="all">
 <link href="../../css/style.css?v=gggggggggggg" rel="stylesheet" type="text/css" media="screen" />   
-<script type="text/javascript" src="../../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js?version=2.3.1"></script>
 <script type="text/javascript" src="../../js/ajax.js"></script>
+<script type="text/javascript" src="/js/easing.js"></script>
+<script type="text/javascript" src="/js/tiger.js?ddddddddd"></script>
     <script type="text/javascript">
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0a37f369f66ef3c1841dcc3320ec316a' type='text/javascript'%3E%3C/script%3E"));
@@ -241,8 +244,9 @@ function showMissionBtn($user)
     else
     {
         $checkdays = DB::queryFirstField("SELECT checkdays FROM user WHERE name=%s",$user);
-        echo " <a class='btn btn-large'   href=\"mission.php\">已签到".$checkdays."天<i class='icon-thumbs-up'></i></a><br /> ";
+        echo " <a class='btn btn-large'   href=\"mission.php\">已签到".$checkdays."天<i class='icon-thumbs-up'></i></a> ";
     }
+    echo '<a href="random.php" title="试试手气" class="btn btn-large"><i class="icon-random"></i></a><br/>';
 }
 
 function bing_pic()
@@ -253,9 +257,20 @@ function bing_pic()
     $p = xml_parser_create();
     xml_parse_into_struct($p,$content,$vals,$index);
     xml_parser_free($p);
-    $url='http://www.bing.com'. $vals[5]['value'];
+    $url='https://www.bing.com'. $vals[5]['value'];
     return $url;
 
 
+}
+function sign($number)
+{
+    if($number >0)
+        return "+".$number;
+    else
+        return $number;
+}
+function getNickname($name)
+{
+    return DB::queryFirstField("SELECT nickname FROM user WHERE name=%s",$name);
 }
 ?>

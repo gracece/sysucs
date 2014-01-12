@@ -16,7 +16,6 @@ $to =safeGet('to');
               <li class="active"><a href="message.php">消息</a></li>
               <li><a href="rank.php">排行榜</a></li>
               <li><a href="../mission.php">签到</a></li>
-              <li><a href="dandan.php">辉宇蛋蛋店</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -108,9 +107,11 @@ else
     //数据库没设计好就只能这样暴力sql！
     $query ="
         select name,sum(num),t as time,content from (
-            (select `user` as name,count(*)  as num,time as t,content from `message` where `fromuser`='".$user."' group by name order by t desc ) 
+            (select `user` as name,count(*)  as num,time as t,content from `message`
+            where `fromuser`='".$user."' group by name order by t desc ) 
             union 
-            (SELECT `fromuser` as name ,count(*) as num ,time as t,content from `message`    where `user`='".$user."' group by name order by t desc ) 
+            (SELECT `fromuser` as name ,count(*) as num ,time as t,content from `message`  
+            where `user`='".$user."' group by name order by t desc ) 
         )as temp group by name order by time desc
 ";
 $result = mysqli_query($dbc,$query);

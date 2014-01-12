@@ -24,11 +24,13 @@ if($type == "add")
 {
   $subject = safePost('subject');
   $name = safePost('name');
+  $major = safePost('major');
   $remark = $_POST['remark'];
 
   DB::insert( 'setting',array(
           'subject'=>$subject,
           'name'=>$name,
+          'major'=>$major,
           'remark'=>$remark
       ));
 
@@ -43,10 +45,14 @@ else if($type=="change")
 {
   $subject = safePost('subject');
   $name = safePost('name');
+  $show = safePost('show');
+  $major = safePost('major');
   $remark = $_POST['remark'];
 
     DB::update( 'setting',array(
           'name'=>$name,
+          'show'=>$show,
+          'major'=>$major,
           'remark'=>$remark
       ),"subject=%s",$subject);
 

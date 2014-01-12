@@ -14,7 +14,6 @@ html_header("计科一班--排行榜");
               <li><a href="message.php">消息</a></li>
               <li class="active"><a href="#">排行榜</a></li>
               <li><a href="../mission.php">签到</a></li>
-              <li><a href="dandan.php">辉宇蛋蛋店</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -82,7 +81,7 @@ for($i=0;$i<$n;$i++)
 ?>
 </tbody>
 </table>
-<div class="alert alert-info">垫底的同学要加把劲了。。。楼上的，说的就是你！</div>
+<div class="alert alert-info">垫底的同学要加把劲了。。。可通过坚持签到或分享资源获得计科币</div>
 <br />
 </div>
 

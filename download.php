@@ -36,6 +36,40 @@ if(isset($_GET['subject']) && isset($_GET['file']))
         $uploader =$row['user'];
         $download_times = $row['downloadtimes'];
 
+
+
+        $query="UPDATE resource set downloadtimes =downloadtimes +1  WHERE subject ='".$subject."' and date = '".$file."' ";
+        mysqli_query($dbc,$query) or die  ("update download time failed!");
+
+        $time =date("U");
+        $query = "INSERT into down values('".$fileTodown."','".$time."','".$ip."','".$user."')";
+        $result = mysqli_query($dbc,$query);
+
+
+
+        $ext = pathinfo("upload/".$subject."/".$fileTodown,PATHINFO_EXTENSION);
+        $ua = $_SERVER['HTTP_USER_AGENT'];
+        $oldFileName = $fileTodown;
+        if(preg_match("/MSIE/",$ua))
+            $fileTodown = rawurlencode($fileTodown);
+
+        if($ext == "pdf")
+        {
+            header("Content-Type:application/pdf");
+            header("Content-Disposition:inline;filename='".$fileTodown."'");
+        }
+        else if($ext=="jpg" or $ext=="png")
+        {
+            header("Content-Type:image");
+            header("Content-Disposition:inline;filename='".$fileTodown."'");
+        }
+        else
+        {
+            header("Content-Type:application/octet-stream");
+            header("Content-Disposition:attachment;filename=\"".$fileTodown."\"");
+        }
+        header("X-Sendfile:upload/".$subject."/".$fileTodown);
+        $fileTodown = $oldFileName;
         if($right == 1)
         {
             $query = "select * from down where file='".addslashes($fileTodown)."' and user ='".$user."'";
@@ -63,7 +97,7 @@ if(isset($_GET['subject']) && isset($_GET['file']))
                     <div class="alert alert-info">
 <?php
                     echo "当期余额".$row['coin'];
-                    echo "你是有多蛋疼才能把计科币搞到负数啊，面壁去！";
+                    echo "请通过签到或分享资源获取计科币！";
                     exit;
                 }
 
@@ -85,38 +119,6 @@ if(isset($_GET['subject']) && isset($_GET['file']))
                 }
             }
         }
-
-        $query="UPDATE resource set downloadtimes =downloadtimes +1  WHERE subject ='".$subject."' and date = '".$file."' ";
-        mysqli_query($dbc,$query) or die  ("update download time failed!");
-
-        $time =date("U");
-        $query = "INSERT into down values('".$fileTodown."','".$time."','".$ip."','".$user."')";
-        $result = mysqli_query($dbc,$query);
-
-
-
-        $ext = pathinfo("upload/".$subject."/".$fileTodown,PATHINFO_EXTENSION);
-        $ua = $_SERVER['HTTP_USER_AGENT'];
-        if(preg_match("/MSIE/",$ua))
-            $fileTodown = rawurlencode($fileTodown);
-
-        if($ext == "pdf")
-        {
-            header("Content-Type:application/pdf");
-            header("Content-Disposition:inline;filename='".$fileTodown."'");
-        }
-        else if($ext=="jpg" or $ext=="png")
-        {
-            header("Content-Type:image");
-            header("Content-Disposition:inline;filename='".$fileTodown."'");
-        }
-        else
-        {
-            header("Content-Type:application/octet-stream");
-            header("Content-Disposition:attachment;filename=\"".$fileTodown."\"");
-        }
-        header("X-Sendfile:upload/".$subject."/".$fileTodown);
-
         exit;
     }
 }

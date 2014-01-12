@@ -1,6 +1,7 @@
 <?php
 require ("../functions.php");
 require("../auth_head.php");
+$_SESSION['CSRF']= "gracece".time();
 html_header("计科一班--个人中心");
 ?>
 <div style="padding: 0px 0px 50px; margin: 0px; border-width: 0px; height: 0px; display: block;" id="yass_top_edge_padding"></div>
@@ -14,7 +15,6 @@ html_header("计科一班--个人中心");
               <li><a href="message.php">消息</a></li>
               <li><a href="rank.php">排行榜</a></li>
               <li><a href="../mission.php">签到</a></li>
-              <li><a href="dandan.php">辉宇蛋蛋店</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -64,7 +64,7 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
             <input name="nickname" type="text"  value="<?php echo $row['nickname']?>" />
         </div>
       </div>
-
+      <input type="hidden" name="csrf" value=<?php echo md5($_SESSION['CSRF']);?> >
 
 <div class="control-group">
         <label class="control-label" >签名档</label>

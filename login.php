@@ -72,31 +72,17 @@ if(isset($_SESSION['right'])&&$_SESSION['right']==1)
         <span><a class="btn" href="reg.php" >注册</a></span>
         <input type="submit" style="float:right;" class="btn btn-primary" value="登录" />
       </form>
-<!--
-<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3585780640" type="text/javascript" charset="utf-8"></script>
-<div id="wb_connect_btn"></div>
-<br />
-<script>
-WB2.anyWhere(function(W){
-    W.widget.connectButton({
-        id: "wb_connect_btn",
-        type:"7,3",
-        callback : {
-            login:function(o){
-                window.location.href="weibo_auth.php";
-            },
-            logout:function(){//退出后的回调函数
-            }
-        }
-    });
-});
-</script>
--->
 <?php
 //<a href="https://api.weibo.com/oauth2/authorize?client_id=3585780640&redirect_uri=http%3A%2F%2Fwww.sysucs.org%2Fweibo_auth.php&response_type=code">
 //<img src="img/weibo_login.png" title="点击进入授权页面" alt="点击进入授权页面" border="0" /></a></p>
 ?>
     </div>
+<div style="position:fixed;bottom:0px;width:100%;text-align:center;background-color: rgba(0, 0, 0, 0.3);" >
+<p style="color:white;margin:5px;">
+忘记密码或需要注册新帐号请邮件联系
+<a href="mailto:admin@sysucs.org"> admin@sysucs.org</a>
+</p>
+</div>
 
 <?php
 if(isset($_POST['login']))
