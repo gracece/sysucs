@@ -69,7 +69,7 @@ $show = DB::query("SELECT *  FROM coin WHERE user=%s and type='试试手气'
 <?php 
 foreach($show as $row)
 {
-    echo "<tr> <td>".date("H:i:s",$row['date'])." <code>".($row['num'])."</code> </td> </tr>";
+    echo "<tr> <td>".date("H:i:s",$row['date'])." <code><b>".($row['num'])."</b></code> </td> </tr>";
 }
 ?>
 </table>
@@ -77,14 +77,25 @@ foreach($show as $row)
    </div>
 
 <div class="span1"></div>
-<div class="span5">
+<div class="span6">
 
 <h3>本时段战绩</h3>
 <?php
-$show = DB::query("SELECT user,sum(num) as get FROM coin WHERE type='试试手气' 
-    AND date>%i group by user order by get",strtotime("today")+date("H")*3600);
+$show = DB::query("SELECT user,sum(num) as get,count(num) as try_times, max(num)
+    as maxx,min(num) as minn FROM (
+        SELECT user,CAST(num as SIGNED) as num FROM coin WHERE type='试试手气' 
+    AND date>%i  ) as XXX group by user order by get",strtotime("today")+date("H")*3600);
 ?>
-<table class="table table-striped">
+<table class="table table-striped table-hover">
+<thead>
+<tr>
+    <th></th>
+    <th>最终</th>
+    <th>次数</th>
+    <th>最高</th>
+    <th>最低</th>
+</tr>
+</thead>
 <?php 
 $i = 1;
 $allnum = count($show);
@@ -94,13 +105,16 @@ foreach($show as $row)
     if($row['user'] == $user)
         echo "class='error'";
     echo"> <td title='".$row['user']."' width=100>".getNickname($row['user'])."</td><td>
-        <code>".sign($row['get'])."</code> ";
+        <code><b>".sign($row['get'])."</b></code> ";
     if($i == 1 && $row['get']<0)
-        echo "<small class='muted'>人品不太好哎，换个姿势再来一次！</small>";
+        echo "<small class='muted'>人品不太好哎</small>";
     elseif($i == $allnum && $row['get'] >0)
-        echo "<small class='muted'>人品爆棚不要太嚣张</small>";
+        echo "<small class='muted'>人品爆棚!</small>";
 
-    echo" </td> </tr>";
+    echo" </td><td><span class='label label-info'>".$row['try_times']."次</span> </td>
+        <td><span class='label label-success'>".sign($row['maxx'])."</span></td>
+        <td><span class='label label-warning'>".sign($row['minn'])."</span></td>
+        </tr>";
     $i++;
 }
 ?>
@@ -132,7 +146,7 @@ if($user=='grace' or $user=='gavin')
     echo "<pre>";
     print_r ($data);
     echo "</pre>
-    <table class='table table-striped'>";
+    <table class='table table-striped table-hover'>";
     foreach ($rank as $row)
     {
         echo "<tr> <td>";
