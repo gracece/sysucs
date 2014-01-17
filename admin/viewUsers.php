@@ -17,7 +17,7 @@ if($isSet){
     $user = $_GET['user'];
     $query = "SELECT * FROM coin WHERE user='".$user."' ORDER BY date DESC";
 }else{
-    $query = "SELECT * FROM user ORDER BY name";
+    $query = "SELECT * FROM user ORDER BY coin desc  ";
 }
 
 $result = mysqli_query($dbc,$query);
@@ -69,7 +69,10 @@ else
 <thead>
 <?php
 if($isSet) echo "<tr><th width='86px'>Time</th><th>Type</th><th>Num</th></tr>";
-else echo "<tr><th>Name</th><th>IP</th><th>Coin</th></tr>";
+else echo "<tr><th>Name</th>
+    <th>IP</th>
+    <th>上次登录</th>
+    <th>Coin</th></tr>";
 ?>
 </thead>
 <tbody>
@@ -80,7 +83,10 @@ if($isSet){
     }
 }else{
     while($row = mysqli_fetch_array($result)){
-        echo "<tr><td><a href='./viewUsers.php?user=".$row['name']."'>".$row['name']."</a></td><td>".$row['ip']."</td><td>".$row['coin']."</td></tr>";
+        echo "<tr><td><a href='./viewUsers.php?user=".$row['name']."'>".$row['name']."</a></td>
+            <td>".$row['ip']."</td>
+            <td>".$row['last_login']."</td>
+            <td>".$row['coin']."</td></tr>";
     }
 }
 ?>

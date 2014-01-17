@@ -15,6 +15,7 @@ html_header("计科一班--签到");
               <li><a href="setting/message.php">消息</a></li>
               <li><a href="setting/rank.php">排行榜</a></li>
               <li class="active"><a href="#">签到</a></li>
+              <li><a href="../random.php">手气</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -126,14 +127,14 @@ if($todaycheck == 0)
 }
 else
     echo "今日已经签到,查看<a href='setting/rank.php'>计科币排行榜</a>。  
-    <a href='/random.php' style='color:red'>签到太少？来试试手气！</a>
+    <a href='/random.php' style='color:red'>签到太少？来试试手气！保证你玩得爽。</a>
     ";
 ?>
 </div>
 <div class="row">
 <div class="span5">
 <h3>已经签到<?php echo $n ?>人:</h3>
-<table class="table table-bordered">
+<table class="table table-bordered table-striped table-hover">
 <tbody>
 <?php
 
@@ -147,9 +148,9 @@ $checkResult = DB::query("SELECT coin.user,coin.date,coin.num,user.checkdays
 foreach($checkResult as $row)
 {
     $t = $row['date'];
-    $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+    $micro = sprintf("%04d",($t - floor($t)) * 10000);
     $d = new DateTime( date('Y-m-d H:i:s.'.$micro,$t) );
-    echo "<tr><td>".$d->format("H:i:s.u")."</td><td title='".$row['user']."'>".getNickname($row['user'])."</td><td><b> <code>".$row['num']."</code></b></td><td>连续签到".$row['checkdays']."天</td></tr>";
+    echo "<tr><td>".substr($d->format("H:i:s.u"),0,13)."</td><td title='".$row['user']."'>".getNickname($row['user'])."</td><td><b> <code>".$row['num']."</code></b></td><td>连续签到".$row['checkdays']."天</td></tr>";
     $number = (int)$row['num'];
     if($number != 15)
     {
@@ -191,7 +192,7 @@ foreach($chartNum as $out) echo $out.',';
 var options = {
     scaleOverlay : true,
         scaleOverride : true,
-        scaleSteps : 10,
+        scaleSteps : 12,
         scaleStepWidth : 1,
         scaleStartValue : 0,
 };

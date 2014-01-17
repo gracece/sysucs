@@ -69,6 +69,9 @@ function setSession($user)
     $_SESSION['user']=$user;
     $_SESSION['admin'] = intval($row['admin']);
     $_SESSION['addInfo'] = intval($row['addInfo']);
+    DB::update('user',array('last_login'=>
+        date("Y-m-d H:i:s"),'ip'=> get_user_ip()
+    ),"name=%s",$user);
 }
 
 function safePost($str)
@@ -205,7 +208,7 @@ function writelist($parent,$dbc,$showUser =false){
             echo "<tr>
                 <td style='text-align:center;'>".$index."</td>
                 <td>
-                <a href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
+                <a target='_blank' href='download.php?subject=".$parent."&file=".$row['date']."'>".$row['name']."</a>
                 </td>
                 <td class='hidden-phone'>".$size."MB</td>";
 
@@ -240,7 +243,7 @@ function showMissionBtn($user)
     //显示签到按钮
     $count = DB::queryFirstField("SELECT COUNT(*) FROM coin WHERE date>=%i AND user=%s AND type='签到'",$date_second,$user);
     if($count== 0)
-        echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">快来签到!</a><br /> ";
+        echo " <a class='btn btn-large btn-primary'  href=\"mission.php?t=". md5(md5(strtotime('today'))."sysucs")."\">快来签到!</a>";
     else
     {
         $checkdays = DB::queryFirstField("SELECT checkdays FROM user WHERE name=%s",$user);

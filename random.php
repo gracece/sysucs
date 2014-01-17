@@ -15,6 +15,7 @@ html_header("计科一班--Random");
               <li><a href="setting/message.php">消息</a></li>
               <li><a href="setting/rank.php">排行榜</a></li>
               <li><a href="mission.php">签到</a></li>
+              <li class="active"><a href="../random.php">手气</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -24,15 +25,15 @@ html_header("计科一班--Random");
 <div class="container">
 <br />
 <div class="alert alert-info">
-试试手气,有增有减，看人品。每人每小时可尝试5次。刷新即可。小赌怡情，大赌伤肾啊
+试试手气,有增有减，看人品。每人每小时可尝试5次。见好就收真英雄！
 </div>
 <?php
 $user = $_SESSION['user'];
 $account = DB::queryFirstRow("SELECT * FROM user WHERE name=%s",$user);
 echo "<h3>计科币 <code>".$account['coin']."</code></h3>";
-if ($account['coin']<50)
+if ($account['coin']<25)
 {
-    echo "余额小于50,请稍后再来";
+    echo "余额小于25,请稍后再来,建议去剥削top 10的土豪！手续费已经降到5%了！！！";
 }
 else
 {
@@ -50,6 +51,9 @@ else
 
 $(document).ready(function(){
 showTiger();
+    $('#twice').click(function() {
+$('#twice_more_label').toggle(100);
+});
 });
     </script>
         <?
@@ -57,23 +61,52 @@ showTiger();
 }
 
 ?>
-<hr/>
 <div class="row" id="my_score">
 <div class="span5" >
 <h3>我的战绩</h3>
 <?php
 $show = DB::query("SELECT *  FROM coin WHERE user=%s and type='试试手气'
-    AND date>%i order by date desc",$user,strtotime("today")+date("H")*3600);
+    AND date>%i order by date ",$user,strtotime("today")+date("H")*3600);
 ?>
 <table class="table">
 <?php 
 foreach($show as $row)
 {
-    echo "<tr> <td>".date("H:i:s",$row['date'])." <code><b>".($row['num'])."</b></code> </td> </tr>";
+    echo "<td>".date("H:i:s",$row['date'])." <code>
+        <b>".($row['num'])."</b></code> </td> ";
 }
 ?>
 </table>
 
+<script type="text/javascript" src="js/Chart.js"></script>
+<canvas id="myChart2"  width="400" height="400"></canvas>
+    <script type="text/javascript">
+    var ctx2 = $("#myChart2").get(0).getContext("2d");
+var myNewChart2 = new Chart(ctx2);
+
+var data2 = {
+    labels : [ <?php foreach($show as $row) { echo '"'.date("H:i:s",$row['date']).'",'; } ?> ],
+    datasets : [
+{
+    fillColor : "rgba(151,187,205,0.5)",
+        strokeColor : "rgba(151,187,205,1)",
+        pointStrokeColor : "#bbb",
+        data : [ <?php foreach($show as $row) { echo $row['num'].','; } ?> ]
+}
+]
+};
+
+var options2 = {
+    scaleOverlay : true,
+        scaleOverride : true,
+        scaleSteps : 20,
+        scaleStepWidth : 10,
+        scaleStartValue : -100,
+        scaleShowLabels:true,
+};
+new Chart(ctx2).Line(data2,options2);
+
+</script>
    </div>
 
 <div class="span1"></div>
@@ -131,29 +164,48 @@ foreach($show as $row)
 			<div id='n2' class="num"></div>
 			<div id='n3' class="num"></div>
 		</div>
+<label for="twice" id="twice_label" class="checkbox"> <input type="checkbox" id="twice" >翻倍(花费1个计科币)</label>
+<label  for="twice_more" id="twice_more_label" class="checkbox">
+ <input type="checkbox" id="twice_more" >加到9倍(花费+1)
+<span class="label label-important">三思!!高风险！!</span>
+</label>
 		<div id="stbtn"></div>
 	</div>
 
 
+<hr />
 <?php
 if($user=='grace' or $user=='gavin')
 {
+    echo "<div class='span5'>";
     $data['this hour'] = DB::queryFirstField("SELECT sum(num) FROM coin WHERE type='试试手气' 
     AND date>%i ",strtotime("today")+date("H")*3600);
-    $data['sum(all)'] = DB::queryFirstField("SELECT sum(num)  FROM coin WHERE type='试试手气'");
+    $data['sum(all_random)'] = DB::queryFirstField("SELECT sum(num)  FROM coin WHERE type='试试手气'");
+    $data['count(all_random)'] = DB::queryFirstField("SELECT count(num)  FROM coin WHERE type='试试手气'");
     $data['avg(all)'] = DB::queryFirstField("SELECT avg(num)  FROM coin WHERE type='试试手气'");
-    $rank = DB::query("SELECT user,sum(num) as num FROM coin WHERE type='试试手气' group by user order by sum(num)");
+    $data['sum(翻倍成本)'] = DB::queryFirstField("SELECT sum(num)  FROM coin WHERE type='试试手气翻倍成本'");
+    $data['sum'] = $data['sum(all_random)'] + $data['sum(翻倍成本)'];
     echo "<pre>";
     print_r ($data);
-    echo "</pre>
-    <table class='table table-striped table-hover'>";
+    echo "</pre>";
+}
+echo "<div class='span5'>
+    <h3>人品排行榜</h3>
+    ";
+    $rank = DB::query("SELECT user,sum(num) as num,count(num) as times FROM coin WHERE type='试试手气' group by user order by sum(num)");
+    echo "<table class='table table-striped table-hover'>";
+    $i = 1;
     foreach ($rank as $row)
     {
         echo "<tr> <td>";
-        echo $row['user'].sign($row['num']);
+        echo $i++;
+        echo " </td> <td title='".$row['user']."'>";
+        echo getNickname($row['user'])."</td><td><code><b>".sign($row['num'])."</b></code>
+            </td><td> <span class='label label-info'>".$row['times']."次</span>
+            </td><td>".$row['num']/$row['times']."</td> ";
         echo "</td> </tr>";
     }
     echo " </table>";
+    echo "</div>";
 
-}
  ?>

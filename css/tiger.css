@@ -1,5 +1,5 @@
 #layout{
-	position: absolute;
+	position: fixed;
 	top:0;
 	left:0;
 	width: 100%;
@@ -42,18 +42,34 @@
 	margin-left: 5px;
 }
 
-#n1{background: url(../img/sign.png) repeat-y center 0px;}
-#n2{background: url(../img/num.png) repeat-y center 0px;}
-#n3{background: url(../img/num.png) repeat-y center 0px;}
+#n1{background: url(../img/sign.png) repeat-y 0px 0px;}
+#n2{background: url(../img/num.png) repeat-y 0px 0px;}
+#n3{background: url(../img/num.png) repeat-y 0px 0px;}
 
 #stbtn{
 	width: 198px;
 	height: 67px;
 	margin:0 auto;
-	margin-top: 28px;
 	background: url(../img/btn_start.png) no-repeat center 0;
+  margin-top: 5px;
 	cursor:pointer;
 }
+
+#twice_label{
+  width: 140px;
+  margin: 0px auto;
+  margin-top: 18px;
+  color:white;
+}
+#twice_more_label{
+  width: 210px;
+  margin: 0px auto;
+  margin-top: 0px;
+  color:white;
+  display:none;
+}
+
+
 #close_btn{
 	width: 30px;
 	height: 30px;

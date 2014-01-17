@@ -3,9 +3,9 @@ require("../functions.php");
 require("../auth_head.php");
 $user = $_SESSION['user'];
 $account = DB::queryFirstRow("SELECT * FROM user WHERE name=%s",$user);
-if ($account['coin']<50)
+if ($account['coin']<25)
 {
-    echo "余额小于50,请稍后再来";
+    echo "余额小于25,请稍后再来";
 }
 else
 {
@@ -13,11 +13,23 @@ else
     $count = DB::count();
     if ($count >= 5)
     {
-        echo "本小时段的5次机会已用完，请下一时段再来！";
+        echo "-99";
     }
     else
     {
-    $num =  mt_rand(-12,11);
+     if(safeGet('twice') == '1')
+     {
+        $num =  mt_rand(-22,22);
+        coinChange($user,-1,"试试手气翻倍成本");
+     }
+     else if(safeGet('twice') == '2')
+     {
+        $num =  mt_rand(-99,99);
+        coinChange($user,-2,"试试手气翻倍成本");
+     }
+     else
+        $num =  mt_rand(-11,11);
+
     $type = "试试手气";
     coinChange($user,$num,$type);
     echo $num;

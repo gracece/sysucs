@@ -59,10 +59,10 @@ if(isset($_POST['password']))
         exit;
     }
 
-    $fee =0-($num * 0.2);
+    $fee =0-($num * 0.05);
     $num = $num +$fee;
     $dec =0-$num;
-    $type ="转让给".$toUser.$reason;
+    $type ="转让给".$toUser."(".$reason.")";
     coinChange($user,$dec,$type);
     $type ="转让手续费";
     coinChange($user,$fee,$type);

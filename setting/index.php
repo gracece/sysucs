@@ -15,6 +15,7 @@ html_header("计科一班--个人中心");
               <li><a href="message.php">消息</a></li>
               <li><a href="rank.php">排行榜</a></li>
               <li><a href="../mission.php">签到</a></li>
+              <li><a href="../random.php">手气</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -120,7 +121,7 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
           <label class="control-label" >转出数量</label>
           <div class="controls">
             <input id="" name="num" type="number" value="9"/>
-      <p class="help-block">转让扣取<code>20%</code>作为手续费！即转100，对方收到80，扣取20</p>
+      <p class="help-block">转让扣取<code>5%</code>作为手续费！即转100，对方收到95，扣取5</p>
           </div>
         </div>
  <div class="control-group">

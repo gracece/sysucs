@@ -16,6 +16,7 @@ $to =safeGet('to');
               <li class="active"><a href="message.php">消息</a></li>
               <li><a href="rank.php">排行榜</a></li>
               <li><a href="../mission.php">签到</a></li>
+              <li><a href="../random.php">手气</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
