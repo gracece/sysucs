@@ -276,4 +276,27 @@ function getNickname($name)
 {
     return DB::queryFirstField("SELECT nickname FROM user WHERE name=%s",$name);
 }
+
+function verify_uems($username,$password)
+{
+    $curl = curl_init(); 
+    $data = 'j_username='.$username.'&j_password='.$password;
+    curl_setopt($curl, CURLOPT_URL, 'http://uems.sysu.edu.cn/jwxt/j_unieap_security_check.do');
+    curl_setopt($curl, CURLOPT_HEADER, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_POST,1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS,$data);
+    $data = curl_exec($curl);
+    $info = curl_getinfo($curl) ;
+    if ($info['http_code'] == '302')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    curl_close($curl);
+}
+
 ?>

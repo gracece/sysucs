@@ -78,5 +78,12 @@ body {
   letter-spacing: 0;
 }
 
-	
-	
+.icon-verified
+{
+  background-image: url("/img/verify.png");
+  background-position: 0 0;
+  background-size: cover;
+  width: 25px;
+  height: 20px;
+  margin-top:0px;
+}

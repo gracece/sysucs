@@ -29,6 +29,22 @@ if(isset($_GET['subject']) && isset($_GET['file']))
         exit;
     }
     else{
+        $query = "select * from user where name ='".$user."'";
+        $result_user =mysqli_query($dbc,$query);
+        $row_user =mysqli_fetch_array($result_user);
+        if($row_user['coin'] <=0)
+        {
+?>
+                    <div class="container">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="alert alert-info">
+<?php
+            echo "当期余额".$row['coin'];
+            echo "请通过签到或分享资源获取计科币！";
+            exit;
+        }
 
         date_default_timezone_set('PRC');
         $row = mysqli_fetch_array($result);
@@ -83,24 +99,6 @@ if(isset($_GET['subject']) && isset($_GET['file']))
             }
             else
             {
-
-                $query = "select * from user where name ='".$user."'";
-                $result =mysqli_query($dbc,$query);
-                $row =mysqli_fetch_array($result);
-                if($row['coin'] <=0)
-                {
-?>
-                    <div class="container">
-                    <br />
-                    <br />
-                    <br />
-                    <div class="alert alert-info">
-<?php
-                    echo "当期余额".$row['coin'];
-                    echo "请通过签到或分享资源获取计科币！";
-                    exit;
-                }
-
 
                 if($subject =="film")
                     $num =-2;

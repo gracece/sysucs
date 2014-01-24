@@ -41,14 +41,25 @@ echo "<div class='alert alert-info'>".$user." 您好！,当前ip为<code>".$nowi
   <div class="span6">
     <h4><?php echo $user ?>资料更改</h4> 
     <form action="change.php?type=1" method="post" class="form-horizontal">
-
-  <div class="control-group">
+   <div class="control-group">
         <label class="control-label" >登录名</label>
         <div class="controls">
             <input name="name" type="text" disabled value="<?php echo $user ?>" />
              <!-- 改这里的disabled是没有用的== --!>
         </div>
   </div>
+    <div class="control-group">
+        <label class="control-label" >学号</label>
+        <div class="controls">
+    <?php if($row['verified'] == 1) { $showVerifyForm =false; 
+?>
+            <input name="name" type="text" disabled value="<?php echo $row['number'] ?>" />
+<?php } else { $showVerifyForm = true;?>
+<a href="#myModal" role="button" class="btn" data-toggle="modal">认证</a>
+<?php }?>
+        </div>
+  </div>
+
 
  <div class="control-group">
         <label class="control-label" >Email</label>
@@ -194,3 +205,54 @@ if($all!=true)
 </div>
 
 
+<?php
+if($showVerifyForm)
+{
+?>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">学号认证</h3>
+  </div>
+  <div class="modal-body">
+
+ <form id="verifyForm" class="form-horizontal">
+<div class="alert alert-info hide" id="verifyResult"> </div>
+<div class="control-group">
+        <label class="control-label" >学号</label>
+        <div class="controls">
+      <input  name="studentID" type="text" required/>
+        </div>
+      </div>
+<div class="control-group">
+        <label class="control-label" >教务系统密码</label>
+        <div class="controls">
+      <input  name="password" type="password" required />
+        </div>
+      </div>
+    <div class="control-group">
+        <div class="controls">
+         <a class="btn" href="#" onclick="verify()">认证</a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+
+<script>
+function verify()
+{
+        $.post("/ajax/verify.php",$('#verifyForm').serialize(),function(data){
+            $("#verifyResult").hide(100);
+            $("#verifyResult").html(data);
+            $("#verifyResult").show(100);
+        });
+}
+
+</script>
+<?php
+} 
+?>

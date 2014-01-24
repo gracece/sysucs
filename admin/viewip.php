@@ -104,7 +104,9 @@ if($_SESSION['admin'] ==1)
                      <td>".$i."</td>
                      <td>".date(" H:i",$row['date'])."</td>
                      <td>".$row['user']."</td>
-                     <td>".$row['ip']."</td>
+                     <td> <a href='http://ip.taobao.com/service/getIpInfo.php?ip=".$row['ip']."'>
+                     ".$row['ip'].
+                     "</a> </td>
                      <td>".($row['ua'])."</td>
                     </tr>
 
