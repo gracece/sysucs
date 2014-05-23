@@ -68,7 +68,7 @@ for($i=0;$i<$n;$i++)
         echo $row['name'];
 
     if($row['verified']==1)
-        echo ' <i title="已认证" class="icon-verified"></i>';
+        echo ' <i title="'.$row['number'].'" class="icon-verified"></i>';
    echo "</a></td>
         <td>".$row['coin']."</td>
         <td>".$row['signature']."</td>

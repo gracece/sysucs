@@ -64,7 +64,7 @@ else
 </h2>
 <h3 id="change"></h3>
 <div class='row'>
-<div class='span7'>
+<div class='span8'>
 <table class='table table-bordered table-striped'>
 <thead>
 <?php
@@ -72,6 +72,7 @@ if($isSet) echo "<tr><th width='86px'>Time</th><th>Type</th><th>Num</th></tr>";
 else echo "<tr><th>Name</th>
     <th>IP</th>
     <th>上次登录</th>
+    <th>学号</th>
     <th>Coin</th></tr>";
 ?>
 </thead>
@@ -86,6 +87,7 @@ if($isSet){
         echo "<tr><td><a href='./viewUsers.php?user=".$row['name']."'>".$row['name']."</a></td>
             <td>".$row['ip']."</td>
             <td>".$row['last_login']."</td>
+            <td>".$row['number']."</td>
             <td>".$row['coin']."</td></tr>";
     }
 }

@@ -42,7 +42,7 @@ function html_header($title="计科一班")
     <meta name="description" content="中山大学2011级计科一班">
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css?version=2.3.1">
 <link rel="stylesheet" href="/css/tiger.css" media="all">
-<link href="../../css/style.css?v=gggggggggggg" rel="stylesheet" type="text/css" media="screen" />   
+<link href="../../css/style.css?v=verified" rel="stylesheet" type="text/css" media="screen" />   
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.js?version=2.3.1"></script>
 <script type="text/javascript" src="../../js/ajax.js"></script>

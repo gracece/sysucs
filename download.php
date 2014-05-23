@@ -41,7 +41,7 @@ if(isset($_GET['subject']) && isset($_GET['file']))
                     <br />
                     <div class="alert alert-info">
 <?php
-            echo "当期余额".$row['coin'];
+            echo "当期余额".$row_user['coin'];
             echo "请通过签到或分享资源获取计科币！";
             exit;
         }

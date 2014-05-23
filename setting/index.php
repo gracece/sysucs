@@ -245,8 +245,9 @@ if($showVerifyForm)
 <script>
 function verify()
 {
+        $("#verifyResult").html("正在连接教务系统...");
         $.post("/ajax/verify.php",$('#verifyForm').serialize(),function(data){
-            $("#verifyResult").hide(100);
+            $("#verifyResult").hide(200);
             $("#verifyResult").html(data);
             $("#verifyResult").show(100);
         });

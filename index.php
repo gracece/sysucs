@@ -146,6 +146,9 @@ while($row = mysqli_fetch_array($result))
 </ul>
 </div>
 
+<li class="nav-li" name="history">
+<i class="icon-chevron-right icon-margintop"></i>
+<a href="#detail" onclick="loadXML('ajax/subject.php','history')">历史科目</a></li>
 
               <?php
 $query = "select * from setting where `show`=1 AND major=8 order by CONVERT(name USING GBK)";

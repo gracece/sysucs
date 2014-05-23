@@ -142,7 +142,7 @@ $chartNum =array(0,0,0,0,0,0,0,0);
 $sum =0;
 
 
-$checkResult = DB::query("SELECT coin.user,coin.date,coin.num,user.checkdays,user.verified
+$checkResult = DB::query("SELECT coin.user,coin.date,coin.num,user.checkdays,user.verified,user.number
     FROM coin,user WHERE user.name=coin.user
     And coin.date >=%s And coin.type ='签到' ORDER BY coin.date DESC",$date_second);
 foreach($checkResult as $row)
@@ -153,9 +153,9 @@ foreach($checkResult as $row)
     echo "<tr><td>".substr($d->format("H:i:s.u"),0,13)."</td>
         <td title='".$row['user']."'>".getNickname($row['user']);
     if($row['verified']==1)
-        echo ' <i title="已认证" class="icon-verified"></i>';
+        echo ' <i title="'.$row['number'].'" class="icon-verified"></i>';
     echo"</td> <td><b> <code>".$row['num']."</code></b></td>
-        <td>连续签到".$row['checkdays']."天</td></tr>";
+        <td width=70>连签".$row['checkdays']."天</td></tr>";
     $number = (int)$row['num'];
     if($number != 15)
     {
