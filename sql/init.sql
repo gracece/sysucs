@@ -1,170 +1,248 @@
--- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
--- http://www.phpmyadmin.net
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
 --
--- 主机: localhost
--- 生成日期: 2013 年 07 月 09 日 14:10
--- 服务器版本: 5.5.31-0ubuntu0.13.04.1
--- PHP 版本: 5.4.9-4ubuntu2.1
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: sysucs
+-- ------------------------------------------------------
+-- Server version	5.7.28-0ubuntu0.16.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- 数据库: `cs`
+-- Table structure for table `banner`
 --
 
--- --------------------------------------------------------
-
---
--- 表的结构 `banner`
---
-
-CREATE TABLE IF NOT EXISTS `banner` (
+DROP TABLE IF EXISTS `banner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banner` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `imgUrl` tinytext NOT NULL,
   `title` tinytext NOT NULL,
   `content` tinytext NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 转存表中的数据 `banner`
+-- Table structure for table `chengyu`
 --
 
-INSERT INTO `banner` (`ID`, `imgUrl`, `title`, `content`) VALUES
-(1, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-01.jpg', 'test1', 'content'),
-(2, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-02.jpg', 'test2', 'content2'),
-(3, 'http://www.bootcss.com/assets/img/bootstrap-mdo-sfmoma-03.jpg', 'nice', 'content3');
-
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `chengyu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chengyu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(111) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=23234 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `coin`
+-- Table structure for table `coin`
 --
 
-CREATE TABLE IF NOT EXISTS `coin` (
+DROP TABLE IF EXISTS `coin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `coin` (
   `user` varchar(20) NOT NULL,
   `type` text NOT NULL,
   `date` double NOT NULL,
   `num` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `comment`
+-- Table structure for table `comment`
 --
 
-CREATE TABLE IF NOT EXISTS `comment` (
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
   `subject` tinytext NOT NULL,
   `file` tinytext NOT NULL,
   `user` tinytext NOT NULL,
   `time` int(12) NOT NULL,
   `content` tinytext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `dandan`
+-- Table structure for table `cookie`
 --
 
-CREATE TABLE IF NOT EXISTS `dandan` (
+DROP TABLE IF EXISTS `cookie`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cookie` (
+  `sso` varchar(64) NOT NULL,
+  `user` varchar(20) NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `time` int(12) NOT NULL,
+  `ua` tinytext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `dandan`
+--
+
+DROP TABLE IF EXISTS `dandan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dandan` (
   `time` int(12) NOT NULL,
   `user` char(20) NOT NULL,
   `addr` tinytext NOT NULL,
   `remark` tinytext NOT NULL,
   `num` int(3) NOT NULL,
   `status` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `down`
+-- Table structure for table `down`
 --
 
-CREATE TABLE IF NOT EXISTS `down` (
+DROP TABLE IF EXISTS `down`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `down` (
   `file` text NOT NULL,
   `time` int(11) NOT NULL,
   `ip` text NOT NULL,
   `user` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `info`
+-- Table structure for table `info`
 --
 
-CREATE TABLE IF NOT EXISTS `info` (
+DROP TABLE IF EXISTS `info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `info` (
   `content` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `type` text NOT NULL,
-  `subject` varchar(20) NOT NULL DEFAULT 'info',
+  `subject` varchar(50) NOT NULL DEFAULT 'info',
   `date` int(11) NOT NULL,
   `ip` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `message`
+-- Table structure for table `invite_code`
 --
 
-CREATE TABLE IF NOT EXISTS `message` (
+DROP TABLE IF EXISTS `invite_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invite_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL,
+  `valid` int(11) NOT NULL DEFAULT '1',
+  `user` varchar(20) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `jwxt`
+--
+
+DROP TABLE IF EXISTS `jwxt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jwxt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(22) NOT NULL,
+  `cookie` varchar(128) NOT NULL,
+  `count` int(11) NOT NULL DEFAULT '0',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `email` varchar(128) NOT NULL,
+  `expired` int(11) NOT NULL DEFAULT '0',
+  `subject` text NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2595 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
   `user` tinytext NOT NULL,
   `time` int(12) NOT NULL,
   `content` text NOT NULL,
   `read` int(11) NOT NULL,
   `fromuser` char(33) NOT NULL DEFAULT 'system'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `resource`
+-- Table structure for table `resource`
 --
 
-CREATE TABLE IF NOT EXISTS `resource` (
+DROP TABLE IF EXISTS `resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
   `description` text,
   `ip` varchar(16) NOT NULL,
-  `downloadtimes` int(5) NOT NULL,
+  `downloadtimes` int(5) NOT NULL DEFAULT '0',
   `user` varchar(20) NOT NULL,
   `comment` int(11) NOT NULL DEFAULT '0',
-  `subject` char(33) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+  `subject` char(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=908 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `setting`
+-- Table structure for table `setting`
 --
 
-CREATE TABLE IF NOT EXISTS `setting` (
-  `subject` char(22) NOT NULL,
-  `name` char(33) NOT NULL,
-  `show` int(11) NOT NULL DEFAULT '1',
+DROP TABLE IF EXISTS `setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setting` (
+  `subject` char(50) NOT NULL,
+  `name` char(50) NOT NULL,
   `remark` text NOT NULL,
-  UNIQUE KEY `subject` (`subject`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+  `show` int(11) NOT NULL DEFAULT '1',
+  `major` int(2) NOT NULL DEFAULT '7',
+  UNIQUE KEY `subject` (`subject`),
+  UNIQUE KEY `subject_2` (`subject`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `user`
+-- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `wb_uid` varchar(64) NOT NULL DEFAULT '0',
   `name` varchar(20) NOT NULL,
   `nickname` varchar(18) NOT NULL,
   `password` text NOT NULL,
@@ -176,43 +254,51 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` tinytext NOT NULL,
   `admin` int(11) NOT NULL DEFAULT '0',
   `addInfo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+  `number` int(9) NOT NULL,
+  `last_login` datetime NOT NULL,
+  `verified` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=176 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `visitors`
+-- Table structure for table `visitors`
 --
 
-CREATE TABLE IF NOT EXISTS `visitors` (
+DROP TABLE IF EXISTS `visitors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `visitors` (
   `date` int(11) NOT NULL,
   `ip` varchar(16) NOT NULL,
   `ua` text NOT NULL,
   `user` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- 表的结构 `water`
+-- Table structure for table `water`
 --
 
-CREATE TABLE IF NOT EXISTS `water` (
+DROP TABLE IF EXISTS `water`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `water` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
   `user` char(33) NOT NULL,
   `time` int(12) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=399 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-CREATE TABLE IF NOT EXISTS `cookie` (
-  `sso` varchar(64) NOT NULL,
-  `user` varchar(20) NOT NULL,
-  `ip` varchar(20) NOT NULL,
-  `time` int(12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-11-29 19:41:37
